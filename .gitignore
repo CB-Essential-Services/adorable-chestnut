@@ -36,6 +36,15 @@ build/Release
 node_modules/
 jspm_packages/
 
+# lerna files
+/lerna-debug.log
+
+# Local Netlify folder
+.netlify
+
+# netlify-lambda build output
+functions
+
 # Typescript v1 declaration files
 typings/
 
