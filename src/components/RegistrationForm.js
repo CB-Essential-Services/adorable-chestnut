@@ -7,7 +7,6 @@ import {loadStripe} from '@stripe/stripe-js'
 import {CardElement, Elements, useStripe, useElements} from '@stripe/react-stripe-js'
 import Select from 'react-select'
 import {useForm, Controller} from 'react-hook-form'
-import fetch from 'unfetch'
 
 const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY)
 

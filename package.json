@@ -26,6 +26,7 @@
     "gatsby-source-filesystem": "^2.2.2",
     "gatsby-transformer-remark": "2.3.8",
     "js-yaml": "^3.13.1",
+    "lerna": "^3.20.2",
     "lodash": "^4.17.15",
     "marked": "^0.8.2",
     "moment": "^2.23.0",
