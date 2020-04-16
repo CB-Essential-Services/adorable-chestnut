@@ -3,10 +3,10 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "start": "sanity start",
-    "deploy": "sanity deploy",
-    "clean": "rm -rf node_modules && rm -rf dist",
-    "test": "sanity check"
+    "start": "lerna bootstrap && sanity start",
+    "deploy": "lerna bootstrap && sanity deploy",
+    "clean": "lerna bootstrap && rm -rf node_modules && rm -rf dist",
+    "test": "lerna bootstrap && sanity check"
   },
   "dependencies": {
     "-": "0.0.1",

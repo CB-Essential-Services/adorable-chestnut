@@ -4,10 +4,10 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "develop": "gatsby develop",
-    "start": "npm run develop",
-    "build": "gatsby build --prefix-paths",
-    "serve": "gatsby serve"
+    "develop": "lerna bootstrap && gatsby develop",
+    "start": "lerna bootstrap && npm run develop",
+    "build": "lerna bootstrap && gatsby build --prefix-paths",
+    "serve": "lerna bootstrap && gatsby serve"
   },
   "dependencies": {
     "-": "0.0.1",
