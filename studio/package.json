@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "lerna bootstrap && sanity start",
-    "deploy": "lerna bootstrap && sanity deploy",
+    "deploy": "sanity deploy",
     "clean": "lerna bootstrap && rm -rf node_modules && rm -rf dist",
     "test": "lerna bootstrap && sanity check"
   },
