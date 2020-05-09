@@ -1,4 +1,4 @@
-import _ from "lodash";
+import _ from 'lodash';
 
 export default function (styleAttr) {
     return styleAttr.split(';').reduce((accumulator, pair) => {
@@ -8,7 +8,7 @@ export default function (styleAttr) {
         }
         let index = pair.indexOf(':');
         if (index === -1) {
-            throw 'could not split style attribute into names and values';
+            throw new Error('could not split style attribute into names and values');
         }
         let name = _.camelCase(pair.substring(0, index).trim());
         accumulator[name] = pair.substring(index + 1).trim();

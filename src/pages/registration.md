@@ -1,0 +1,4 @@
+---
+template: registration
+title: Registration
+---

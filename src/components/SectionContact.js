@@ -1,20 +1,20 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, {useState, useMemo} from 'react'
-import {useAsync, useSetState} from 'react-use'
-import PropTypes from 'prop-types'
-import {loadStripe} from '@stripe/stripe-js'
-import {CardElement, Elements, useStripe, useElements} from '@stripe/react-stripe-js'
-import Select from 'react-select'
-import {useForm, Controller} from 'react-hook-form'
-import fetch from 'unfetch'
+import React, {useState, useMemo} from 'react';
+import {useAsync, useSetState} from 'react-use';
+import PropTypes from 'prop-types';
+import {loadStripe} from '@stripe/stripe-js';
+import {CardElement, Elements, useStripe, useElements} from '@stripe/react-stripe-js';
+import Select from 'react-select';
+import {useForm, Controller} from 'react-hook-form';
+import fetch from 'unfetch';
 
-const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY)
+const stripePromise = loadStripe(process.env.GATSBY_STRIPE_PUBLISHABLE_KEY);
 
 const headers = {
   Accept: 'application/json',
-  'Content-Type': 'application/json'
-}
+  'Content-Type': 'application/json',
+};
 
 const Field = React.forwardRef(({label, name, children, ...props}, ref) => {
   return (
@@ -22,13 +22,12 @@ const Field = React.forwardRef(({label, name, children, ...props}, ref) => {
       <label htmlFor={name}>{label}</label>
       <div>{children || <input id={name} name={name} ref={ref} {...props} />}</div>
     </div>
-  )
-})
+  );
+});
 
 function Wizard() {
-  const jurisdictionList = ('/.netlify/functions/jurisdictions', (url) =>
-    fetch(url).then((r) => r.json())
-  )
+  const jurisdictionList =
+    ('/.netlify/functions/jurisdictions', (url) => fetch(url).then((r) => r.json()));
 
   const {
     handleSubmit,
@@ -38,17 +37,17 @@ function Wizard() {
     getValues,
     isSubmitting,
     isSubmitted,
-    isValid
-  } = useForm()
+    isValid,
+  } = useForm();
 
-  const stripe = useStripe()
-  const elements = useElements()
+  const stripe = useStripe();
+  const elements = useElements();
 
-  const [paymentMethod, setPaymentMethod] = useState()
-  const [stripeError, setStripeError] = useState()
+  const [paymentMethod, setPaymentMethod] = useState();
+  const [stripeError, setStripeError] = useState();
 
   const onSubmit = async (values) => {
-    console.log(values)
+    console.log(values);
     // if (!stripe || !elements) {
     //   // Stripe.js has not loaded yet. Make sure to disable
     //   // form submission until Stripe.js has loaded.
@@ -89,13 +88,13 @@ function Wizard() {
     const result = await fetch('/.netlify/functions/request-lei', {
       headers,
       method: 'POST',
-      body: JSON.stringify({...values, legalJurisdiction: values.legalJurisdiction.value})
+      body: JSON.stringify({...values, legalJurisdiction: values.legalJurisdiction.value}),
     })
       .then((res) => res.json())
-      .catch(console.error)
+      .catch(console.error);
 
-    return result
-  }
+    return result;
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -106,16 +105,15 @@ function Wizard() {
           name="companyName"
           label="Company Name"
           ref={register({
-            required: true
+            required: true,
           })}
-          autoFocus
         />
 
         <Field
           name="companyNumber"
           label="Company Number"
           ref={register({
-            required: true
+            required: true,
           })}
         />
 
@@ -125,15 +123,15 @@ function Wizard() {
             rules={{required: true}}
             control={control}
             onChange={([selected]) => {
-              console.log(selected)
-              return selected
+              console.log(selected);
+              return selected;
             }}
             name="legalJurisdiction"
           />
         </Field>
 
         <div>
-          <label htmlFor="isLevel2">
+          <label htmlFor="isLevel2DataAvailable">
             <div>
               <input type="checkbox" name="isLevel2DataAvailable" ref={register} />
               This company is owned by another company (at least 50%)
@@ -149,7 +147,7 @@ function Wizard() {
           name="firstName"
           label="First Name"
           ref={register({
-            required: true
+            required: true,
           })}
         />
 
@@ -157,7 +155,7 @@ function Wizard() {
           name="lastName"
           label="Last Name"
           ref={register({
-            required: true
+            required: true,
           })}
         />
 
@@ -166,7 +164,7 @@ function Wizard() {
           label="Email"
           type="email"
           ref={register({
-            required: true
+            required: true,
           })}
         />
       </section>
@@ -185,7 +183,7 @@ function Wizard() {
               name="terms"
               type="checkbox"
               ref={register({
-                required: true
+                required: true,
               })}
             />{' '}
             I hereby accept the Terms & Conditions and Privacy Policy and give permission to apply
@@ -197,7 +195,7 @@ function Wizard() {
         </button>
       </section>
     </form>
-  )
+  );
 }
 
 function RegistrationForm() {
@@ -205,7 +203,7 @@ function RegistrationForm() {
     <Elements stripe={stripePromise}>
       <Wizard />
     </Elements>
-  )
+  );
 }
 
-export default RegistrationForm
+export default RegistrationForm;
