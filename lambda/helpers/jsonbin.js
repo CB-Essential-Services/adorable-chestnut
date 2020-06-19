@@ -1,35 +1,33 @@
-import fetch from 'node-fetch'
+import Frisbee from 'frisbee'
 
 const {JSONBIN_TOKEN, JSONBIN_USERNAME} = process.env
+const client = new Frisbee({
+  baseURI: `https://jsonbin.org/${JSONBIN_USERNAME}`,
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    Authorization: `token ${JSONBIN_TOKEN}`,
+  },
+})
 
-const findTrackingCode = (code) =>
-  fetch(`https://jsonbin.org/${JSONBIN_USERNAME}/${code}`, {
-    method: 'GET',
-    headers: {
-      authorization: `token ${JSONBIN_TOKEN}`,
-    },
-  }).then((r) => r.json())
+const getTrackingCodeRecord = (code) => client.get(`/${code}`).then((r) => r.body)
 
 const setEmailForTrackingCode = (email, code) =>
-  fetch(`https://jsonbin.org/${JSONBIN_USERNAME}/${code}`, {
-    method: 'POST',
-    headers: {
-      authorization: `token ${JSONBIN_TOKEN}`,
-    },
-    body: JSON.stringify({
-      email,
-    }),
-  }).then((r) => r.json())
+  client
+    .post(`/${code}`, {
+      body: {
+        email,
+      },
+    })
+    .then((r) => r.body)
 
 const setStatusForTrackingCode = (status, code) =>
-  fetch(`https://jsonbin.org/${JSONBIN_USERNAME}/${code}`, {
-    method: 'PATCH',
-    headers: {
-      authorization: `token ${JSONBIN_TOKEN}`,
-    },
-    body: JSON.stringify({
-      status,
-    }),
-  }).then((r) => r.json())
+  client
+    .patch(`/${code}`, {
+      body: {
+        status,
+      },
+    })
+    .then((r) => r.body)
 
-export {findTrackingCode, setEmailForTrackingCode, setStatusForTrackingCode}
+export {getTrackingCodeRecord, setEmailForTrackingCode, setStatusForTrackingCode}

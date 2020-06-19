@@ -11,7 +11,7 @@ const headers = {
 };
 
 export const placeOrder = async (body) => {
-  const url = new URL(`${getBaseUrl()}/place-order`);
+  const url = new URL(`${getBaseUrl()}/placeOrder`);
   return fetch(url, {headers, method: 'POST', body: JSON.stringify(body)})
     .then((r) => r.json())
     .then((body) => {
@@ -21,6 +21,18 @@ export const placeOrder = async (body) => {
 
 export const confirmOrder = async (body) => {
   const url = new URL(`${getBaseUrl()}/confirm`);
+  return fetch(url, {headers, method: 'POST', body: JSON.stringify(body)})
+    .then((r) => r.json())
+    .then((body) => {
+      if (body.error) {
+        return Promise.reject(body.error);
+      }
+      return body;
+    });
+};
+
+export const createBillingPortalSession = async (body) => {
+  const url = new URL(`${getBaseUrl()}/createBillingPortalSession`);
   return fetch(url, {headers, method: 'POST', body: JSON.stringify(body)})
     .then((r) => r.json())
     .then((body) => {

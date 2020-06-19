@@ -2,15 +2,15 @@ import qs from 'querystring'
 import sendgridMail from './helpers/sendgridMail'
 import sendgridClient from './helpers/sendgridClient'
 import extractHostFromContext from './helpers/extractHostFromContext'
-import {findTrackingCode, setStatusForTrackingCode} from './helpers/jsonbin'
+
+import {getTrackingCodeRecord, setStatusForTrackingCode} from './helpers/jsonbin'
+import getRapidLeiClient from './helpers/getRapidLeiClient'
 
 export async function handler(event, context) {
   try {
     const {orderTrackingCode, orderStatus} = qs.parse(event.body)
-    console.log(orderTrackingCode, orderStatus)
-    const {email, status: originalStatus} = await findTrackingCode(orderTrackingCode)
-    console.log(email)
-    console.log(originalStatus)
+    const {email, status: originalStatus} = await getTrackingCodeRecord(orderTrackingCode)
+    console.log(orderTrackingCode, originalStatus, orderStatus, email)
 
     if (!email) {
       throw new Error('No email address found for order')
@@ -22,6 +22,9 @@ export async function handler(event, context) {
         body: 'Status already handled',
       }
     }
+
+    const rapidLeiClient = await getRapidLeiClient()
+    const orderResult = await rapidLeiClient.get(`/lei/orders/${orderTrackingCode}/status`)
 
     const templateId = await sendgridClient
       .request({
@@ -48,9 +51,10 @@ export async function handler(event, context) {
       to: email,
       templateId,
       dynamicTemplateData: {
-        code: orderTrackingCode,
-        status: orderStatus,
+        orderTrackingCode,
+        orderStatus,
         link: `${host}/status?orderTrackingCode=${orderTrackingCode}`,
+        ...orderResult.body,
       },
     })
 

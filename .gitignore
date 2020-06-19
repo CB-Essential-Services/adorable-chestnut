@@ -80,3 +80,5 @@ yarn-error.log
 
 # built lambda functions
 functions
+
+.env.*

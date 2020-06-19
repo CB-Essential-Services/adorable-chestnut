@@ -1,9 +1,10 @@
-import React from 'react';
-import useSWR from 'swr';
+import React, {useState} from 'react';
+import {useQuery} from 'react-query';
 import {useAsyncFn, useSearchParam} from 'react-use';
 
-import {getOrder, confirmOrder} from './RegistrationForm/api';
+import {getOrder, confirmOrder, createBillingPortalSession} from './RegistrationForm/api';
 import {format} from 'date-fns';
+import {create} from 'lodash';
 
 const Row = ({label, value}) => (
   <div>
@@ -97,16 +98,31 @@ const ConfirmReferenceData = ({status, orderTrackingCode, data}) => {
 };
 
 const OrderStatus = () => {
-  const trackingCode = useSearchParam('orderTrackingCode');
+  const orderTrackingCode = useSearchParam('orderTrackingCode');
+  const [isFulfilled, setIsFulfilled] = useState(false);
 
-  const {data: order, error} = useSWR(trackingCode, getOrder, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
+  const MINUTE = 60 * 1000;
+  const {data: order, error} = useQuery(orderTrackingCode, getOrder, {
+    refetchOnWindowFocus: !isFulfilled,
+    refetchInterval: !isFulfilled && 1 * MINUTE,
+    onSuccess(data) {
+      if (data?.orderStatus === 'complete') {
+        setIsFulfilled(true);
+      }
+    },
   });
+
+  const openBillingSession = () => {
+    createBillingPortalSession({orderTrackingCode}).then((session) => {
+      window.open(session.url);
+    });
+  };
 
   return (
     <div className="inner" style={{maxWidth: 900}}>
       <h1>Order Status</h1>
+
+      <button onClick={openBillingSession}>Manage Subscription</button>
 
       {error && <div>An error occurred.</div>}
 
@@ -142,7 +158,7 @@ const OrderStatus = () => {
       {order?.referenceData && (
         <ConfirmReferenceData
           status={order.orderStatus}
-          orderTrackingCode={order.orderTrackingCode}
+          orderTrackingCode={orderTrackingCode}
           data={order.referenceData}
         />
       )}

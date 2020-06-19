@@ -4,7 +4,7 @@ import React, {useRef, useMemo, useState, useEffect} from 'react';
 import Select from 'react-select';
 import AsyncSelect from 'react-select/async';
 import {useForm, Controller} from 'react-hook-form';
-import useSWR from 'swr';
+import {useQuery} from 'react-query';
 import debounce from 'debounce-promise';
 
 import {getJurisdictions, searchCompaniesByName, getCompany} from './api';
@@ -27,7 +27,7 @@ const CompanySearchByName = ({jurisdiction, ...props}) => {
 };
 
 function Step1({onComplete}) {
-  const jurisdictionList = useSWR('/jurisdictions', getJurisdictions, {
+  const jurisdictionList = useQuery('jurisdictions', getJurisdictions, {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
   });

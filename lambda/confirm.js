@@ -1,8 +1,11 @@
-import qs from 'querystring'
-import fetch from 'node-fetch'
-const RAPID_LEI_TOKEN = process.env.RAPID_LEI_TOKEN
-const RAPID_LEI_HOST = process.env.RAPID_LEI_HOST
-const RAPID_LEI_ID = process.env.RAPID_LEI_ID
+import Stripe from 'stripe'
+import {getTrackingCodeRecord} from './helpers/jsonbin'
+import getRapidLeiClient from './helpers/getRapidLeiClient'
+import getStripeCustomer from './helpers/getStripeCustomer'
+import {addYears} from 'date-fns'
+
+const {STRIPE_PLAN_ID} = process.env
+const stripe = Stripe(STRIPE_SECRET_KEY)
 
 export async function handler(event, context) {
   if (event.httpMethod !== 'POST') {
@@ -11,43 +14,38 @@ export async function handler(event, context) {
 
   try {
     const {orderTrackingCode, confirm = true} = JSON.parse(event.body)
+    const rapidLeiClient = await getRapidLeiClient()
 
-    const authResult = await fetch(`${RAPID_LEI_HOST}/auth/token`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-      },
-      body: qs.stringify({
-        grant_type: 'client_credentials',
-        client_id: RAPID_LEI_ID,
-        client_secret: RAPID_LEI_TOKEN,
-      }),
-    }).then((r) => r.json())
-
-    const token = authResult.access_token
-
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+    const createStripeSubscription = async () => {
+      const {email} = await getTrackingCodeRecord(orderTrackingCode)
+      const customer = await getStripeCustomer({email})
+      const cancelDate = addYears(new Date(), years)
+      const subscription = await stripe.subscriptions.create({
+        customer: customer.id,
+        items: [{plan: STRIPE_PLAN_ID}],
+        expand: ['latest_invoice.payment_intent'],
+        cancel_at: Math.floor(cancelDate.valueOf() / 1000),
+        collection_method: 'charge_automatically',
+      })
+      return subscription
     }
 
-    const status = await fetch(`${RAPID_LEI_HOST}/lei/orders/${orderTrackingCode}/status`, {
-      headers,
-      method: 'GET',
-    }).then((r) => r.json())
+    const [statusResult, rdConfirmationResult, stripeResult] = await Promise.all([
+      rapidLeiClient.get(`/lei/orders/${orderTrackingCode}/status`),
+      rapidLeiClient.put(`/lei/orders/${orderTrackingCode}/confirmation/${confirm}`),
+      createStripeSubscription(),
+    ])
 
-    const rdConfirmation = await fetch(
-      `${RAPID_LEI_HOST}/lei/orders/${orderTrackingCode}/confirmation/${confirm}`,
-      {
-        headers,
-        method: 'PUT',
-      }
-    ).then((r) => r.json())
+    if (statusResult.error || rdConfirmationResult.error || stripeResult.error) {
+      throw statusResult.error || rdConfirmationResult.error || stripeResult.error
+    }
 
     return {
       statusCode: 200,
-      body: JSON.stringify({status, rdConfirmation}),
+      body: JSON.stringify({
+        status: statusResult.body,
+        rdConfirmation: rdConfirmationResult.body,
+      }),
     }
   } catch (e) {
     console.error(e.message)
