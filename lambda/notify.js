@@ -3,7 +3,7 @@ import sendgridMail from './helpers/sendgridMail'
 import sendgridClient from './helpers/sendgridClient'
 import extractHostFromContext from './helpers/extractHostFromContext'
 
-import {getTrackingCodeRecord, setStatusForTrackingCode} from './helpers/jsonbin'
+import {getTrackingCodeRecord, updateTrackingCodeRecord} from './helpers/jsonbin'
 import getRapidLeiClient from './helpers/getRapidLeiClient'
 
 export async function handler(event, context) {
@@ -43,7 +43,7 @@ export async function handler(event, context) {
       }
     }
 
-    await setStatusForTrackingCode(orderStatus, orderTrackingCode)
+    await updateTrackingCodeRecord(orderTrackingCode, {status: orderStatus, ...orderResult.body})
 
     const host = extractHostFromContext(context)
 

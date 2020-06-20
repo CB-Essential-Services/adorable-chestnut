@@ -55,7 +55,7 @@ function Step2({state, onComplete}) {
       return;
     }
 
-    const {paymentMethod, error: stripeError} = await stripe.createPaymentMethod({
+    const {paymentMethod, error: newStripeError} = await stripe.createPaymentMethod({
       type: 'card',
       card: elements.getElement(CardElement),
       billing_details: {
@@ -64,8 +64,8 @@ function Step2({state, onComplete}) {
       },
     });
 
-    if (stripeError) {
-      setStripeError(stripeError);
+    if (newStripeError) {
+      setStripeError(newStripeError);
       return;
     } else {
       setPaymentMethod(paymentMethod);
@@ -130,22 +130,6 @@ function Step2({state, onComplete}) {
             required: true,
           })}
         />
-
-        <Field
-          name="years"
-          label="Number of years"
-          ref={register({
-            required: true,
-          })}
-        >
-          <select>
-            {[1, 2, 3, 4, 5].map((x) => (
-              <option key={x} value={x}>
-                {x}
-              </option>
-            ))}
-          </select>
-        </Field>
       </section>
 
       <section>

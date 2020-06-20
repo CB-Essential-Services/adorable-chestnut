@@ -1,10 +1,7 @@
-import Stripe from 'stripe'
+import stripe from './helpers/stripe'
 import getStripeCustomer from './helpers/getStripeCustomer'
 import extractHostFromContext from './helpers/extractHostFromContext'
 import {getTrackingCodeRecord} from './helpers/jsonbin'
-
-const {STRIPE_SECRET_KEY} = process.env
-const stripe = Stripe(STRIPE_SECRET_KEY)
 
 export async function handler(event, context) {
   try {

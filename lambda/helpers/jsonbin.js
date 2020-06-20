@@ -1,33 +1,47 @@
 import Frisbee from 'frisbee'
 
-const {JSONBIN_TOKEN, JSONBIN_USERNAME} = process.env
+const {JSONBIN_TOKEN} = process.env
 const client = new Frisbee({
-  baseURI: `https://jsonbin.org/${JSONBIN_USERNAME}`,
+  baseURI: `https://api.jsonbin.io/v3`,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: `token ${JSONBIN_TOKEN}`,
+    'X-Master-Key': JSONBIN_TOKEN,
   },
 })
 
-const getTrackingCodeRecord = (code) => client.get(`/${code}`).then((r) => r.body)
+const getTrackingCodeRecord = (code) => client.get(`/b/${code}`).then((r) => r.body)
 
-const setEmailForTrackingCode = (email, code) =>
-  client
-    .post(`/${code}`, {
-      body: {
-        email,
+const updateTrackingCodeRecord = async (code, data) => {
+  const record = await getTrackingCodeRecord(code)
+
+  if (!record) {
+    return client.post(`/b`, {
+      headers: {
+        'X-Bin-Name': code,
       },
+      body: data,
     })
-    .then((r) => r.body)
+  }
 
-const setStatusForTrackingCode = (status, code) =>
-  client
-    .patch(`/${code}`, {
+  return client.post(`/b/${code}`, {
+    body: {
+      ...record,
+      ...data,
+    },
+  })
+}
+
+const setStatusForTrackingCode = async (status, code) => {
+  const record = await getTrackingCodeRecord(code)
+  return client
+    .put(`/b/${code}`, {
       body: {
+        ...record,
         status,
       },
     })
     .then((r) => r.body)
+}
 
-export {getTrackingCodeRecord, setEmailForTrackingCode, setStatusForTrackingCode}
+export {getTrackingCodeRecord, updateTrackingCodeRecord}

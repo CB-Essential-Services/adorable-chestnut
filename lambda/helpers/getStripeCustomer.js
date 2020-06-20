@@ -1,7 +1,4 @@
-import Stripe from 'stripe'
-
-const {STRIPE_SECRET_KEY} = process.env
-const stripe = Stripe(STRIPE_SECRET_KEY)
+import stripe from './stripe'
 
 export default async function getStripeCustomer({email, firstName, lastName, paymentMethod}) {
   const {data: customerList} = await stripe.customers.list({
@@ -10,6 +7,7 @@ export default async function getStripeCustomer({email, firstName, lastName, pay
   })
 
   let customer = customerList && customerList[0]
+  console.log(customerList)
 
   if (!firstName && !lastName && !paymentMethod && !customer) {
     throw new Error('Customer not found')
