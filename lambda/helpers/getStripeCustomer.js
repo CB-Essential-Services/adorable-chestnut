@@ -1,9 +1,11 @@
-import Stripe from 'stripe'
+import stripe from './stripe'
 
-const {STRIPE_SECRET_KEY} = process.env
-const stripe = Stripe(STRIPE_SECRET_KEY)
-
-export default async function getStripeCustomer({email, firstName, lastName, paymentMethod}) {
+export default async function getStripeCustomer({
+  email,
+  firstName,
+  lastName,
+  paymentMethod,
+}) {
   const {data: customerList} = await stripe.customers.list({
     email,
     limit: 1,

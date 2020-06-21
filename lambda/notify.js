@@ -3,20 +3,22 @@ import sendgridMail from './helpers/sendgridMail'
 import sendgridClient from './helpers/sendgridClient'
 import extractHostFromContext from './helpers/extractHostFromContext'
 
-import {getTrackingCodeRecord, setStatusForTrackingCode} from './helpers/jsonbin'
+import {getTrackingCodeRecord, updateTrackingCodeRecord} from './helpers/fauna'
 import getRapidLeiClient from './helpers/getRapidLeiClient'
 
 export async function handler(event, context) {
   try {
     const {orderTrackingCode, orderStatus} = qs.parse(event.body)
-    const {email, status: originalStatus} = await getTrackingCodeRecord(orderTrackingCode)
-    console.log(orderTrackingCode, originalStatus, orderStatus, email)
+    const {
+      data: {email, orderStatus: oldOrderStatus, ...orderRecord},
+    } = await getTrackingCodeRecord(orderTrackingCode)
+    // console.log(orderTrackingCode, oldOrderStatus, orderStatus, email)
 
     if (!email) {
       throw new Error('No email address found for order')
     }
 
-    if (originalStatus === orderStatus) {
+    if (oldOrderStatus === orderStatus) {
       return {
         statusCode: 200,
         body: 'Status already handled',
@@ -24,7 +26,9 @@ export async function handler(event, context) {
     }
 
     const rapidLeiClient = await getRapidLeiClient()
-    const orderResult = await rapidLeiClient.get(`/lei/orders/${orderTrackingCode}/status`)
+    const orderResult = await rapidLeiClient.get(
+      `/lei/orders/${orderTrackingCode}/status`
+    )
 
     const templateId = await sendgridClient
       .request({
@@ -33,7 +37,9 @@ export async function handler(event, context) {
       })
       .then(([response, body]) => {
         const template = body.templates.find((x) => x.name === orderStatus)
-        return template?.id
+        if (template?.versions?.length > 0) {
+          return template.id
+        }
       })
 
     if (!templateId) {
@@ -43,7 +49,7 @@ export async function handler(event, context) {
       }
     }
 
-    await setStatusForTrackingCode(orderStatus, orderTrackingCode)
+    await updateTrackingCodeRecord(orderTrackingCode, orderResult.body)
 
     const host = extractHostFromContext(context)
 
@@ -51,6 +57,7 @@ export async function handler(event, context) {
       to: email,
       templateId,
       dynamicTemplateData: {
+        ...orderRecord,
         orderTrackingCode,
         orderStatus,
         link: `${host}/status?orderTrackingCode=${orderTrackingCode}`,

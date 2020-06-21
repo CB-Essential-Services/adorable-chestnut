@@ -4,7 +4,6 @@ import {useAsyncFn, useSearchParam} from 'react-use';
 
 import {getOrder, confirmOrder, createBillingPortalSession} from './RegistrationForm/api';
 import {format} from 'date-fns';
-import {create} from 'lodash';
 
 const Row = ({label, value}) => (
   <div>
@@ -66,7 +65,7 @@ const ReferenceData = ({data}) => {
 };
 
 const ConfirmReferenceData = ({status, orderTrackingCode, data}) => {
-  const [{value, loading, error}, confirm] = useAsyncFn(
+  const [confirmationState, confirm] = useAsyncFn(
     (confirm) => confirmOrder({orderTrackingCode, confirm}),
     [orderTrackingCode]
   );
@@ -74,12 +73,13 @@ const ConfirmReferenceData = ({status, orderTrackingCode, data}) => {
   return (
     <div>
       <div style={{marginBottom: '1rem'}}>
-        {loading && 'Loading...'}
+        {confirmationState.loading && 'Loading...'}
 
-        {value && value.rdConfirmation.message}
-        {error && error.message}
+        {confirmationState.value?.message}
 
-        {!value && !loading && !error && (
+        {confirmationState.error?.message}
+
+        {!confirmationState.value && !confirmationState.loading && !confirmationState.error && (
           <div>
             Please verify the information below.
             <div>
@@ -122,8 +122,6 @@ const OrderStatus = () => {
     <div className="inner" style={{maxWidth: 900}}>
       <h1>Order Status</h1>
 
-      <button onClick={openBillingSession}>Manage Subscription</button>
-
       {error && <div>An error occurred.</div>}
 
       {!order && <div>Loading...</div>}
@@ -138,6 +136,9 @@ const OrderStatus = () => {
 
       {order?.orderStatus === 'complete' && (
         <div>
+          <p>
+            <button onClick={openBillingSession}>Manage Subscription</button>
+          </p>
           <p>{order.message}</p>
           <p>Your LEI is {order.leiNumber}.</p>
           {order.nextRenewalDate && (

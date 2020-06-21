@@ -8,7 +8,10 @@ export async function handler(event, context) {
     const companyNumber = params.number
     const jurisdictionCode = params.jurisdiction.toLowerCase().replace('-', '_')
 
-    const company = await openCorporates.companies.get(jurisdictionCode, companyNumber)
+    const company = await openCorporates.companies.get(
+      jurisdictionCode,
+      companyNumber
+    )
 
     return {
       statusCode: 200,

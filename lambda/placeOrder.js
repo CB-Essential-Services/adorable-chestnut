@@ -1,4 +1,4 @@
-import {setEmailForTrackingCode} from './helpers/jsonbin'
+import {updateTrackingCodeRecord} from './helpers/fauna'
 import extractHostFromContext from './helpers/extractHostFromContext'
 import getRapidLeiClient from './helpers/getRapidLeiClient'
 import getStripeCustomer from './helpers/getStripeCustomer'
@@ -21,7 +21,6 @@ export async function handler(event, context) {
       companyNumber,
       jurisdiction,
       isLevel2DataAvailable,
-      years = 1,
       ...payload
     } = JSON.parse(event.body)
 
@@ -32,7 +31,7 @@ export async function handler(event, context) {
       companyNumber,
       isLevel2DataAvailable,
       legalJurisdiction: jurisdiction,
-      multiYearSupport: years,
+      multiYearSupport: 1,
       notificationUrl: `${host}/.netlify/functions/notify`,
     }
 
@@ -61,7 +60,13 @@ export async function handler(event, context) {
     const [customer, trackingRecord] = await Promise.all([
       // creates customer if they don't exist
       getStripeCustomer({email, firstName, lastName, paymentMethod}),
-      setEmailForTrackingCode(email, order.orderTrackingCode),
+      updateTrackingCodeRecord(order.orderTrackingCode, {
+        email,
+        companyName,
+        companyNumber,
+        firstName,
+        lastName,
+      }),
     ])
 
     return {

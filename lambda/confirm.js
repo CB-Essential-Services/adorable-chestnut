@@ -1,11 +1,9 @@
-import Stripe from 'stripe'
-import {getTrackingCodeRecord} from './helpers/jsonbin'
+import stripe from './helpers/stripe'
+import {getTrackingCodeRecord} from './helpers/fauna'
 import getRapidLeiClient from './helpers/getRapidLeiClient'
 import getStripeCustomer from './helpers/getStripeCustomer'
-import {addYears} from 'date-fns'
 
 const {STRIPE_PLAN_ID} = process.env
-const stripe = Stripe(STRIPE_SECRET_KEY)
 
 export async function handler(event, context) {
   if (event.httpMethod !== 'POST') {
@@ -17,35 +15,39 @@ export async function handler(event, context) {
     const rapidLeiClient = await getRapidLeiClient()
 
     const createStripeSubscription = async () => {
-      const {email} = await getTrackingCodeRecord(orderTrackingCode)
+      const {
+        data: {email},
+      } = await getTrackingCodeRecord(orderTrackingCode)
       const customer = await getStripeCustomer({email})
-      const cancelDate = addYears(new Date(), years)
       const subscription = await stripe.subscriptions.create({
         customer: customer.id,
         items: [{plan: STRIPE_PLAN_ID}],
         expand: ['latest_invoice.payment_intent'],
-        cancel_at: Math.floor(cancelDate.valueOf() / 1000),
         collection_method: 'charge_automatically',
+        metadata: {
+          orderTrackingCode,
+        },
       })
       return subscription
     }
 
-    const [statusResult, rdConfirmationResult, stripeResult] = await Promise.all([
-      rapidLeiClient.get(`/lei/orders/${orderTrackingCode}/status`),
-      rapidLeiClient.put(`/lei/orders/${orderTrackingCode}/confirmation/${confirm}`),
-      createStripeSubscription(),
-    ])
+    const rdConfirmationResult = await rapidLeiClient.put(
+      `/lei/orders/${orderTrackingCode}/confirmation/${confirm}`
+    )
 
-    if (statusResult.error || rdConfirmationResult.error || stripeResult.error) {
-      throw statusResult.error || rdConfirmationResult.error || stripeResult.error
+    if (rdConfirmationResult.error) {
+      throw rdConfirmationResult.error
+    }
+
+    const stripeResult = await createStripeSubscription()
+
+    if (stripeResult.error) {
+      throw stripeResult.error
     }
 
     return {
       statusCode: 200,
-      body: JSON.stringify({
-        status: statusResult.body,
-        rdConfirmation: rdConfirmationResult.body,
-      }),
+      body: JSON.stringify(rdConfirmationResult.body),
     }
   } catch (e) {
     console.error(e.message)
