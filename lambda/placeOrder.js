@@ -2,7 +2,6 @@ import {updateTrackingCodeRecord} from './helpers/fauna'
 import extractHostFromContext from './helpers/extractHostFromContext'
 import getRapidLeiClient from './helpers/getRapidLeiClient'
 import getStripeCustomer from './helpers/getStripeCustomer'
-import {format, addYears, addDays} from 'date-fns'
 
 export async function handler(event, context) {
   if (event.httpMethod !== 'POST') {
@@ -33,7 +32,6 @@ export async function handler(event, context) {
       isLevel2DataAvailable,
       legalJurisdiction: jurisdiction,
       multiYearSupport: 1,
-      // nextRenewalDate: format(addDays(new Date(), 365 + 30), 'yyyy-MM-dd'),
       notificationUrl: `${host}/.netlify/functions/notify`,
     }
 
@@ -62,10 +60,14 @@ export async function handler(event, context) {
     const [customer, trackingRecord] = await Promise.all([
       // creates customer if they don't exist
       getStripeCustomer({email, firstName, lastName, paymentMethod}),
-      updateTrackingCodeRecord(order.orderTrackingCode, {email}),
+      updateTrackingCodeRecord(order.orderTrackingCode, {
+        email,
+        companyName,
+        companyNumber,
+        firstName,
+        lastName,
+      }),
     ])
-
-    console.log(trackingRecord)
 
     return {
       statusCode: 200,

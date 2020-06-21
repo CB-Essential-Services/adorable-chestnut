@@ -10,15 +10,15 @@ export async function handler(event, context) {
   try {
     const {orderTrackingCode, orderStatus} = qs.parse(event.body)
     const {
-      data: {email, status: originalStatus},
+      data: {email, orderStatus: oldOrderStatus, ...orderRecord},
     } = await getTrackingCodeRecord(orderTrackingCode)
-    console.log(orderTrackingCode, originalStatus, orderStatus, email)
+    // console.log(orderTrackingCode, oldOrderStatus, orderStatus, email)
 
     if (!email) {
       throw new Error('No email address found for order')
     }
 
-    if (originalStatus === orderStatus) {
+    if (oldOrderStatus === orderStatus) {
       return {
         statusCode: 200,
         body: 'Status already handled',
@@ -37,7 +37,9 @@ export async function handler(event, context) {
       })
       .then(([response, body]) => {
         const template = body.templates.find((x) => x.name === orderStatus)
-        return template?.id
+        if (template?.versions?.length > 0) {
+          return template.id
+        }
       })
 
     if (!templateId) {
@@ -55,6 +57,7 @@ export async function handler(event, context) {
       to: email,
       templateId,
       dynamicTemplateData: {
+        ...orderRecord,
         orderTrackingCode,
         orderStatus,
         link: `${host}/status?orderTrackingCode=${orderTrackingCode}`,
