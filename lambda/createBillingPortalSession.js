@@ -1,7 +1,7 @@
 import stripe from './helpers/stripe'
 import getStripeCustomer from './helpers/getStripeCustomer'
 import extractHostFromContext from './helpers/extractHostFromContext'
-import {getTrackingCodeRecord} from './helpers/jsonbin'
+import {getTrackingCodeRecord} from './helpers/fauna'
 
 export async function handler(event, context) {
   try {
@@ -11,7 +11,9 @@ export async function handler(event, context) {
 
     const host = extractHostFromContext(context)
     const {orderTrackingCode} = JSON.parse(event.body)
-    const {email, status} = await getTrackingCodeRecord(orderTrackingCode)
+    const {
+      data: {email, status},
+    } = await getTrackingCodeRecord(orderTrackingCode)
     const customer = await getStripeCustomer({email})
 
     if (!customer) {

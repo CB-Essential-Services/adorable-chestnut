@@ -1,4 +1,4 @@
-import {updateTrackingCodeRecord} from './helpers/jsonbin'
+import {updateTrackingCodeRecord} from './helpers/fauna'
 import extractHostFromContext from './helpers/extractHostFromContext'
 import getRapidLeiClient from './helpers/getRapidLeiClient'
 import getStripeCustomer from './helpers/getStripeCustomer'
@@ -64,6 +64,8 @@ export async function handler(event, context) {
       getStripeCustomer({email, firstName, lastName, paymentMethod}),
       updateTrackingCodeRecord(order.orderTrackingCode, {email}),
     ])
+
+    console.log(trackingRecord)
 
     return {
       statusCode: 200,

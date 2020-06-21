@@ -6,7 +6,9 @@ export async function handler(event, context) {
     const params = event.queryStringParameters
     const {orderTrackingCode} = params
 
-    const statusResult = await rapidLeiClient.get(`/lei/orders/${orderTrackingCode}/status`)
+    const statusResult = await rapidLeiClient.get(
+      `/lei/orders/${orderTrackingCode}/status`
+    )
 
     if (statusResult.error) {
       throw statusResult.error

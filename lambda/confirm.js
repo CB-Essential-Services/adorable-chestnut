@@ -1,5 +1,5 @@
 import stripe from './helpers/stripe'
-import {getTrackingCodeRecord} from './helpers/jsonbin'
+import {getTrackingCodeRecord} from './helpers/fauna'
 import getRapidLeiClient from './helpers/getRapidLeiClient'
 import getStripeCustomer from './helpers/getStripeCustomer'
 
@@ -15,7 +15,9 @@ export async function handler(event, context) {
     const rapidLeiClient = await getRapidLeiClient()
 
     const createStripeSubscription = async () => {
-      const {email} = await getTrackingCodeRecord(orderTrackingCode)
+      const {
+        data: {email},
+      } = await getTrackingCodeRecord(orderTrackingCode)
       const customer = await getStripeCustomer({email})
       const subscription = await stripe.subscriptions.create({
         customer: customer.id,
@@ -37,7 +39,7 @@ export async function handler(event, context) {
       throw rdConfirmationResult.error
     }
 
-    const stripeResult = await createStripeSubscription(rdConfirmationResult.leiNumber)
+    const stripeResult = await createStripeSubscription()
 
     if (stripeResult.error) {
       throw stripeResult.error

@@ -1,4 +1,4 @@
-import {getTrackingCodeRecord} from './helpers/jsonbin'
+import {getTrackingCodeRecord} from './helpers/fauna'
 import getRapidLeiClient from './helpers/getRapidLeiClient'
 import stripe from './helpers/stripe'
 
@@ -6,7 +6,9 @@ const renewLei = async (invoice) => {
   const rapidLeiClient = await getRapidLeiClient()
   const subscription = await stripe.subscriptions.retrieve(invoice.subscription)
   const {orderTrackingCode} = subscription.metadata
-  const {leiNumber} = getTrackingCodeRecord(orderTrackingCode)
+  const {
+    data: {leiNumber},
+  } = getTrackingCodeRecord(orderTrackingCode)
 
   const renewResult = await rapidLeiClient.post(`/leis/orders/renew`, {
     body: {

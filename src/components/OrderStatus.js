@@ -79,7 +79,7 @@ const ConfirmReferenceData = ({status, orderTrackingCode, data}) => {
 
         {confirmationState.error?.message}
 
-        {!confirmationState.value && !confirmationState.error && (
+        {!confirmationState.value && !confirmationState.loading && !confirmationState.error && (
           <div>
             Please verify the information below.
             <div>

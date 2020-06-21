@@ -3,13 +3,15 @@ import sendgridMail from './helpers/sendgridMail'
 import sendgridClient from './helpers/sendgridClient'
 import extractHostFromContext from './helpers/extractHostFromContext'
 
-import {getTrackingCodeRecord, updateTrackingCodeRecord} from './helpers/jsonbin'
+import {getTrackingCodeRecord, updateTrackingCodeRecord} from './helpers/fauna'
 import getRapidLeiClient from './helpers/getRapidLeiClient'
 
 export async function handler(event, context) {
   try {
     const {orderTrackingCode, orderStatus} = qs.parse(event.body)
-    const {email, status: originalStatus} = await getTrackingCodeRecord(orderTrackingCode)
+    const {
+      data: {email, status: originalStatus},
+    } = await getTrackingCodeRecord(orderTrackingCode)
     console.log(orderTrackingCode, originalStatus, orderStatus, email)
 
     if (!email) {
@@ -24,7 +26,9 @@ export async function handler(event, context) {
     }
 
     const rapidLeiClient = await getRapidLeiClient()
-    const orderResult = await rapidLeiClient.get(`/lei/orders/${orderTrackingCode}/status`)
+    const orderResult = await rapidLeiClient.get(
+      `/lei/orders/${orderTrackingCode}/status`
+    )
 
     const templateId = await sendgridClient
       .request({
@@ -43,7 +47,7 @@ export async function handler(event, context) {
       }
     }
 
-    await updateTrackingCodeRecord(orderTrackingCode, {status: orderStatus, ...orderResult.body})
+    await updateTrackingCodeRecord(orderTrackingCode, orderResult.body)
 
     const host = extractHostFromContext(context)
 

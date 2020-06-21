@@ -1,7 +1,7 @@
 import qs from 'querystring'
 import Frisbee from 'frisbee'
 
-const {RAPID_LEI_TOKEN, RAPID_LEI_HOST, RAPID_LEI_ID, JSONBIN_TOKEN, JSONBIN_USERNAME} = process.env
+const {RAPID_LEI_TOKEN, RAPID_LEI_HOST, RAPID_LEI_ID} = process.env
 
 export default async function getRapidLeiClient() {
   const client = new Frisbee({
