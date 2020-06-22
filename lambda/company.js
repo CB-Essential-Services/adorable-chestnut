@@ -1,5 +1,4 @@
-const API_TOKEN = ''
-const openCorporates = require('opencorporates')(API_TOKEN)
+const openCorporates = require('opencorporates')(process.env.OPENCORPORATES_KEY)
 
 export async function handler(event, context) {
   try {

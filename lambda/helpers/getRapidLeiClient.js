@@ -2,7 +2,6 @@ import qs from 'querystring'
 import Frisbee from 'frisbee'
 
 export default async function getRapidLeiClient() {
-  console.log(process.env.RAPID_LEI_HOST)
   const client = new Frisbee({
     baseURI: process.env.RAPID_LEI_HOST,
     headers: {
