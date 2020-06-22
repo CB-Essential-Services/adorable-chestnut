@@ -52,8 +52,6 @@ export const getOrder = async (orderTrackingCode) => {
   const {body} = await client.get(`/order`, {
     params: {orderTrackingCode},
   });
-  console.log(typeof body);
-  console.log(body);
   return body;
 };
 

@@ -1,5 +1,3 @@
-require('dotenv-flow').config({path: '../'})
-
 import _ from 'lodash'
 import getRapidLeiClient from './helpers/getRapidLeiClient'
 

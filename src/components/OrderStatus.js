@@ -66,7 +66,7 @@ const ReferenceData = ({data}) => {
 
 const ConfirmReferenceData = ({status, orderTrackingCode, data}) => {
   const [confirmationState, confirm] = useAsyncFn(
-    (confirm) => confirmOrder({orderTrackingCode, confirm}),
+    (approved) => confirmOrder({orderTrackingCode, confirm: approved}),
     [orderTrackingCode]
   );
 
