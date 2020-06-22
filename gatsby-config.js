@@ -1,6 +1,19 @@
+const {createProxyMiddleware} = require('http-proxy-middleware'); //v1.x.x
+
 module.exports = {
   pathPrefix: '/',
   siteMetadata: require('./site-metadata.json'),
+  developMiddleware: (app) => {
+    app.use(
+      '/.netlify/functions/',
+      createProxyMiddleware({
+        target: 'http://localhost:9000',
+        pathRewrite: {
+          '/.netlify/functions/': '',
+        },
+      })
+    );
+  },
   plugins: [
     `gatsby-plugin-react-helmet`,
     `gatsby-source-data`,

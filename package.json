@@ -4,10 +4,11 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "develop": "lerna bootstrap && gatsby develop",
+    "develop": "lerna bootstrap && (npm run serve-lambda & gatsby develop)",
     "start": "lerna bootstrap && npm run develop",
     "build": "lerna bootstrap && gatsby build --prefix-paths && npm run build-lambda",
-    "build-lambda": "netlify-lambda build lambda -c ./webpack.functions.js",
+    "serve-lambda": "NODE_ENV=development netlify-lambda serve lambda -c ./webpack.functions.js",
+    "build-lambda": "NODE_ENV=production netlify-lambda build lambda -c ./webpack.functions.js",
     "serve": "lerna bootstrap && gatsby serve",
     "postinstall": "netlify-lambda install"
   },
@@ -40,7 +41,6 @@
     "marked": "^0.8.2",
     "moment": "^2.23.0",
     "moment-strftime": "^0.5.0",
-    "netlify-cli": "^2.51.0",
     "netlify-lambda": "^1.6.3",
     "node-sass": "^4.13.1",
     "node-sass-utils": "^1.1.2",
@@ -64,6 +64,7 @@
     "@sendgrid/mail": "^7.1.1",
     "faunadb": "^2.14.2",
     "frisbee": "^3.1.3",
+    "http-proxy-middleware": "^1.0.4",
     "node-fetch": "^2.6.0",
     "opencorporates": "^3.0.3",
     "unfetch": "^4.1.0"

@@ -3,8 +3,6 @@ import {getTrackingCodeRecord} from './helpers/fauna'
 import getRapidLeiClient from './helpers/getRapidLeiClient'
 import getStripeCustomer from './helpers/getStripeCustomer'
 
-const {STRIPE_PLAN_ID} = process.env
-
 export async function handler(event, context) {
   if (event.httpMethod !== 'POST') {
     return {statusCode: 405, body: 'Method Not Allowed'}
@@ -21,7 +19,7 @@ export async function handler(event, context) {
       const customer = await getStripeCustomer({email})
       const subscription = await stripe.subscriptions.create({
         customer: customer.id,
-        items: [{plan: STRIPE_PLAN_ID}],
+        items: [{plan: process.env.STRIPE_PLAN_ID}],
         expand: ['latest_invoice.payment_intent'],
         collection_method: 'charge_automatically',
         metadata: {
