@@ -28,12 +28,18 @@ export async function handler(event, context) {
     return {
       statusCode: 200,
       body: JSON.stringify(session),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     }
   } catch (error) {
     console.log(error)
     return {
       statusCode: 500,
       body: JSON.stringify({error}),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     }
   }
 }

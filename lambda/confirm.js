@@ -48,12 +48,18 @@ export async function handler(event, context) {
     return {
       statusCode: 200,
       body: JSON.stringify(rdConfirmationResult.body),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     }
   } catch (e) {
     console.error(e.message)
     return {
       statusCode: 500,
       body: JSON.stringify({error: true}),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     }
   }
 }

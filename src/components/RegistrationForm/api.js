@@ -1,80 +1,72 @@
-import fetch from 'unfetch';
+import Frisbee from 'frisbee';
 
-const getBaseUrl = () => {
-  const {host, protocol} = document?.location;
-  return `${host ? `${protocol}${host}` : ''}/.netlify/functions`;
+const {host, protocol} = typeof document !== 'undefined' ? document.location : {};
+
+const client = new Frisbee({
+  baseURI: `${host ? `${protocol}${host}` : ''}/.netlify/functions`,
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+});
+
+export const placeOrder = async (payload) => {
+  const {body} = await client.post('/placeOrder', {
+    body: payload,
+  });
+
+  if (body.error) {
+    throw new Error(body.error);
+  }
+  return body.order;
 };
 
-const headers = {
-  Accept: 'application/json',
-  'Content-Type': 'application/json',
+export const confirmOrder = async (payload) => {
+  const {body} = await client.post('/confirm', {
+    body: payload,
+  });
+
+  if (body.error) {
+    throw new Error(body.error);
+  }
+  return body;
 };
 
-export const placeOrder = async (body) => {
-  const url = new URL(`${getBaseUrl()}/placeOrder`);
-  return fetch(url, {headers, method: 'POST', body: JSON.stringify(body)})
-    .then((r) => r.json())
-    .then((body) => {
-      return body.error ? Promise.reject(body.error) : body;
-    });
-};
+export const createBillingPortalSession = async (payload) => {
+  const {body} = await client.post('/createBillingPortalSession', {
+    body: payload,
+  });
 
-export const confirmOrder = async (body) => {
-  const url = new URL(`${getBaseUrl()}/confirm`);
-  return fetch(url, {headers, method: 'POST', body: JSON.stringify(body)})
-    .then((r) => r.json())
-    .then((body) => {
-      if (body.error) {
-        return Promise.reject(body.error);
-      }
-      return body;
-    });
-};
-
-export const createBillingPortalSession = async (body) => {
-  const url = new URL(`${getBaseUrl()}/createBillingPortalSession`);
-  return fetch(url, {headers, method: 'POST', body: JSON.stringify(body)})
-    .then((r) => r.json())
-    .then((body) => {
-      if (body.error) {
-        return Promise.reject(body.error);
-      }
-      return body;
-    });
+  if (body.error) {
+    throw new Error(body.error);
+  }
+  return body;
 };
 
 export const getJurisdictions = async () => {
-  const url = new URL(`${getBaseUrl()}/jurisdictions`);
-  return fetch(url, {headers}).then((r) => r.json());
+  const {body} = await client.get('/jurisdictions');
+  return body;
 };
 
-export const getOrder = async (trackingCode) => {
-  const url = new URL(`${getBaseUrl()}/order?orderTrackingCode=${trackingCode}`);
-  return fetch(url, {headers}).then((r) => r.json());
+export const getOrder = async (orderTrackingCode) => {
+  const {body} = await client.get(`/order`, {
+    params: {orderTrackingCode},
+  });
+  console.log(typeof body);
+  console.log(body);
+  return body;
 };
 
 export const searchCompaniesByName = async ({jurisdiction, name}) => {
-  const url = new URL(`${getBaseUrl()}/search`);
-  const params = {
-    jurisdiction,
-    name,
-  };
-  url.search = new URLSearchParams(params).toString();
-  return fetch(url, {
-    headers,
-  }).then((r) => r.json());
+  const {body} = await client.get(`/search`, {
+    params: {jurisdiction, name},
+  });
+  return body;
 };
 
-export const getCompany = ({jurisdiction, number}) => {
-  const url = new URL(`${getBaseUrl()}/company`);
-  const params = {
-    jurisdiction,
-    number,
-  };
-  url.search = new URLSearchParams(params).toString();
-  return fetch(url, {
-    headers: {
-      Accept: 'application/json',
-    },
-  }).then((r) => r.json());
+export const getCompany = async ({jurisdiction, number}) => {
+  const {body} = await client.get(`/company`, {
+    params: {jurisdiction, number},
+  });
+  return body;
 };
