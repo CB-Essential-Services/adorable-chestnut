@@ -81,8 +81,8 @@ function Step2({state, onComplete}) {
     };
 
     try {
-      await placeOrder(payload);
-      onComplete(payload);
+      const {orderTrackingCode} = await placeOrder(payload);
+      window.location.href = `/status?orderTrackingCode=${orderTrackingCode}`;
     } catch (error) {
       const {failureReason} = error;
       setError(failureReason);

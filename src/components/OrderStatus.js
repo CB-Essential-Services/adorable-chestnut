@@ -127,7 +127,10 @@ const OrderStatus = () => {
       {!order && <div>Loading...</div>}
 
       {order?.orderStatus === 'in_progress' && !order.preAuthorityCheckLeiNumber && (
-        <div>Your order is in progress.</div>
+        <div>
+          Thank you for your order! It's currently in progress. You'll receive an email with updates
+          soon.
+        </div>
       )}
 
       {order?.orderStatus === 'in_progress' && order.preAuthorityCheckLeiNumber && (

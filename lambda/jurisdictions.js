@@ -1,47 +1,14 @@
 require('dotenv-flow').config({path: '../'})
 
-import qs from 'querystring'
-import fetch from 'node-fetch'
 import _ from 'lodash'
-const RAPID_LEI_TOKEN = process.env.RAPID_LEI_TOKEN
-const RAPID_LEI_HOST = process.env.RAPID_LEI_HOST
-const RAPID_LEI_ID = process.env.RAPID_LEI_ID
+import getRapidLeiClient from './helpers/getRapidLeiClient'
 
 import countryLookup from 'country-code-lookup'
 import stateCodes from 'us-state-codes'
 
-// const rapidJurisdictions = require('../data/rapidlei/jurisdictions.json')
-// const ocJurisdictions = require('../data/opencorporates/jurisdictions.json')
-
-const getRapidLeiHeaders = async () => {
-  const authResult = await fetch(`${RAPID_LEI_HOST}/auth/token`, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-    },
-    body: qs.stringify({
-      grant_type: 'client_credentials',
-      client_id: RAPID_LEI_ID,
-      client_secret: RAPID_LEI_TOKEN,
-    }),
-  }).then((r) => r.json())
-
-  const token = authResult.access_token
-
-  const headers = {
-    Authorization: `Bearer ${token}`,
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  }
-
-  return headers
-}
-
 const getJurisdictionsFromRapidLei = async () => {
-  const headers = await getRapidLeiHeaders()
-  const result = await fetch(`${RAPID_LEI_HOST}/jurisdictions`, {
-    headers,
-  }).then((r) => r.json())
+  const rapidLeiClient = await getRapidLeiClient()
+  const {body: result} = await rapidLeiClient.get('/jurisdictions')
 
   const countries = result.countries
     .filter((x) => x.confidenceLevel > 5)

@@ -16,12 +16,18 @@ export async function handler(event, context) {
 
     return {
       statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(statusResult.body),
     }
   } catch (e) {
     console.error(e.message)
     return {
       statusCode: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({error: true}),
     }
   }
