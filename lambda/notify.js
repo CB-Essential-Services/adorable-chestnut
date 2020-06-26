@@ -10,15 +10,19 @@ import {capitalize} from 'lodash'
 export async function handler(event, context) {
   try {
     const {orderTrackingCode, orderStatus} = qs.parse(event.body)
+    console.log(orderTrackingCode, orderStatus)
+    const record = await getTrackingCodeRecord(orderTrackingCode)
+
+    if (!record?.data) {
+      throw new Error('Tracking record not found')
+    }
+
     const {
-      data: {
-        email,
-        orderStatus: oldOrderStatus,
-        subscriptionId,
-        ...orderRecord
-      },
-    } = await getTrackingCodeRecord(orderTrackingCode)
-    // console.log(orderTrackingCode, oldOrderStatus, orderStatus, email)
+      email,
+      orderStatus: oldOrderStatus,
+      subscriptionId,
+      ...orderRecord
+    } = record.data
 
     if (!email) {
       throw new Error('No email address found for order')
