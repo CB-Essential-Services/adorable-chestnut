@@ -39,7 +39,7 @@ export async function handler(event, context) {
 
     const subscription = await createStripeSubscription()
 
-    updateTrackingCodeRecord(orderTrackingCode, {
+    await updateTrackingCodeRecord(orderTrackingCode, {
       subscriptionId: subscription.id,
     })
 
