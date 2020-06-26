@@ -1,4 +1,6 @@
 import qs from 'querystring'
+
+import stripe from './helpers/stripe'
 import sendgridMail from './helpers/sendgridMail'
 import sendgridClient from './helpers/sendgridClient'
 import extractHostFromContext from './helpers/extractHostFromContext'
@@ -87,7 +89,7 @@ export async function handler(event, context) {
 
     return {
       statusCode: 200,
-      body: '',
+      body: JSON.stringify({success: true}),
     }
   } catch (error) {
     if (error?.response?.body?.errors) {
