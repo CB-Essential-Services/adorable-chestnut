@@ -10,7 +10,12 @@ export async function handler(event, context) {
   try {
     const {orderTrackingCode, orderStatus} = qs.parse(event.body)
     const {
-      data: {email, orderStatus: oldOrderStatus, ...orderRecord},
+      data: {
+        email,
+        orderStatus: oldOrderStatus,
+        subscriptionId,
+        ...orderRecord
+      },
     } = await getTrackingCodeRecord(orderTrackingCode)
     // console.log(orderTrackingCode, oldOrderStatus, orderStatus, email)
 
@@ -49,7 +54,13 @@ export async function handler(event, context) {
       }
     }
 
-    await updateTrackingCodeRecord(orderTrackingCode, orderResult.body)
+    await Promise.all([
+      updateTrackingCodeRecord(orderTrackingCode, orderResult.body),
+      subscriptionId &&
+        stripe.subscriptions.update(subscriptionId, {
+          metadata: orderResult.body,
+        }),
+    ])
 
     const host = extractHostFromContext(context)
 

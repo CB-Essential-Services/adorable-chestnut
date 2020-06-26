@@ -1,5 +1,5 @@
 import stripe from './helpers/stripe'
-import {getTrackingCodeRecord} from './helpers/fauna'
+import {getTrackingCodeRecord, updateTrackingCodeRecord} from './helpers/fauna'
 import getRapidLeiClient from './helpers/getRapidLeiClient'
 import getStripeCustomer from './helpers/getStripeCustomer'
 
@@ -37,10 +37,14 @@ export async function handler(event, context) {
       throw rdConfirmationResult.error
     }
 
-    const stripeResult = await createStripeSubscription()
+    const subscription = await createStripeSubscription()
 
-    if (stripeResult.error) {
-      throw stripeResult.error
+    updateTrackingCodeRecord(orderTrackingCode, {
+      subscriptionId: subscription.id,
+    })
+
+    if (subscription.error) {
+      throw subscription.error
     }
 
     return {
