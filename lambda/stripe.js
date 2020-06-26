@@ -17,6 +17,10 @@ const renewLei = async (invoice) => {
       leiNumber = body.leiNumber
     }
 
+    if (!leiNumber) {
+      throw new Error('No LEI number was assigned yet')
+    }
+
     const result = await rapidLeiClient.post(`/leis/orders/renew`, {
       body: {
         leiNumber,

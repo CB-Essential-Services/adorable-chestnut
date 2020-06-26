@@ -5,6 +5,7 @@ import extractHostFromContext from './helpers/extractHostFromContext'
 
 import {getTrackingCodeRecord, updateTrackingCodeRecord} from './helpers/fauna'
 import getRapidLeiClient from './helpers/getRapidLeiClient'
+import {capitalize} from 'lodash'
 
 export async function handler(event, context) {
   try {
@@ -63,17 +64,21 @@ export async function handler(event, context) {
     ])
 
     const host = extractHostFromContext(context)
+    const dynamicTemplateData = {
+      ...orderRecord,
+      orderTrackingCode,
+      orderStatus,
+      link: `${host}/status?orderTrackingCode=${orderTrackingCode}`,
+      ...orderResult.body,
+    }
+
+    dynamicTemplateData.firstName = capitalize(dynamicTemplateData.firstName)
+    dynamicTemplateData.lastName = capitalize(dynamicTemplateData.lastName)
 
     await sendgridMail.send({
       to: email,
       templateId,
-      dynamicTemplateData: {
-        ...orderRecord,
-        orderTrackingCode,
-        orderStatus,
-        link: `${host}/status?orderTrackingCode=${orderTrackingCode}`,
-        ...orderResult.body,
-      },
+      dynamicTemplateData,
     })
 
     return {

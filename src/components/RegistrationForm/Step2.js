@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, {useRef, useMemo, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {CardElement, useStripe, useElements} from '@stripe/react-stripe-js';
+import {navigate} from 'gatsby';
 import {placeOrder} from './api';
 
 import Field from './Field';
@@ -14,7 +15,6 @@ function Step2({state, onComplete}) {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [paymentMethod, setPaymentMethod] = useState();
   const [stripeError, setStripeError] = useState();
   const [error, setError] = useState();
 
@@ -67,8 +67,6 @@ function Step2({state, onComplete}) {
     if (newStripeError) {
       setStripeError(newStripeError);
       return;
-    } else {
-      setPaymentMethod(paymentMethod);
     }
 
     const payload = {
@@ -82,7 +80,7 @@ function Step2({state, onComplete}) {
 
     try {
       const {orderTrackingCode} = await placeOrder(payload);
-      window.location.href = `/status?orderTrackingCode=${orderTrackingCode}`;
+      navigate(`/status?orderTrackingCode=${orderTrackingCode}`);
     } catch (error) {
       const {failureReason} = error;
       setError(failureReason);

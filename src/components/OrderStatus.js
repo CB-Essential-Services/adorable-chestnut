@@ -119,7 +119,7 @@ const OrderStatus = () => {
   };
 
   return (
-    <div className="inner" style={{maxWidth: 900}}>
+    <div className="inner" style={{maxWidth: 700}}>
       <h1>Order Status</h1>
 
       {error && <div>An error occurred.</div>}
