@@ -28,10 +28,20 @@ const renewLei = async (invoice) => {
       },
     })
 
-    console.log(result)
+    if (result.body.failureReason) {
+      throw new Error(result.body.failureReason)
+    }
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({success: true}),
+    }
   } catch (err) {
     console.error(err)
-    console.log('Could not renew LEI')
+    return {
+      statusCode: 500,
+      body: JSON.stringify({error: 'Could not renew LEI'}),
+    }
   }
 }
 
@@ -42,8 +52,7 @@ export async function handler(event, context) {
       case 'invoice.payment_succeeded':
         const invoice = stripeEvent.data.object
         // Don't wait for this to finish
-        renewLei(invoice)
-        break
+        return renewLei(invoice)
       default:
         console.log(`Ignoring webhook for ${stripeEvent.type}`)
     }
