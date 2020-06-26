@@ -47,6 +47,9 @@ const renewLei = async (invoice) => {
 
 export async function handler(event, context) {
   try {
+    // TODO Implement Webhook signatures for security
+    // https://stripe.com/docs/webhooks/signatures
+    // add process.env.STRIPE_WEBHOOK_SECRET
     const stripeEvent = JSON.parse(event.body)
     switch (stripeEvent.type) {
       case 'invoice.payment_succeeded':
