@@ -6,7 +6,7 @@
   "scripts": {
     "develop": "lerna bootstrap && (npm run serve-lambda & gatsby develop)",
     "start": "lerna bootstrap && npm run develop",
-    "build": "lerna bootstrap && npm run build-stackbit && gatsby build --prefix-paths && npm run build-lambda",
+    "build": "lerna bootstrap && npm run build-stackbit && npm run build-lambda",
     "serve-lambda": "NODE_ENV=development netlify-lambda serve lambda -c ./webpack.functions.js",
     "build-lambda": "NODE_ENV=production netlify-lambda build lambda -c ./webpack.functions.js",
     "build-stackbit": "NODE_ENV=production ./stackbit-build.sh",
