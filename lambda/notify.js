@@ -5,14 +5,24 @@ import extractHostFromContext from './helpers/extractHostFromContext'
 
 import {getTrackingCodeRecord, updateTrackingCodeRecord} from './helpers/fauna'
 import getRapidLeiClient from './helpers/getRapidLeiClient'
+import {capitalize} from 'lodash'
 
 export async function handler(event, context) {
   try {
     const {orderTrackingCode, orderStatus} = qs.parse(event.body)
+    console.log(orderTrackingCode, orderStatus)
+    const record = await getTrackingCodeRecord(orderTrackingCode)
+
+    if (!record?.data) {
+      throw new Error('Tracking record not found')
+    }
+
     const {
-      data: {email, orderStatus: oldOrderStatus, ...orderRecord},
-    } = await getTrackingCodeRecord(orderTrackingCode)
-    // console.log(orderTrackingCode, oldOrderStatus, orderStatus, email)
+      email,
+      orderStatus: oldOrderStatus,
+      subscriptionId,
+      ...orderRecord
+    } = record.data
 
     if (!email) {
       throw new Error('No email address found for order')
@@ -49,20 +59,30 @@ export async function handler(event, context) {
       }
     }
 
-    await updateTrackingCodeRecord(orderTrackingCode, orderResult.body)
+    await Promise.all([
+      updateTrackingCodeRecord(orderTrackingCode, orderResult.body),
+      subscriptionId &&
+        stripe.subscriptions.update(subscriptionId, {
+          metadata: orderResult.body,
+        }),
+    ])
 
     const host = extractHostFromContext(context)
+    const dynamicTemplateData = {
+      ...orderRecord,
+      orderTrackingCode,
+      orderStatus,
+      link: `${host}/status?orderTrackingCode=${orderTrackingCode}`,
+      ...orderResult.body,
+    }
+
+    dynamicTemplateData.firstName = capitalize(dynamicTemplateData.firstName)
+    dynamicTemplateData.lastName = capitalize(dynamicTemplateData.lastName)
 
     await sendgridMail.send({
       to: email,
       templateId,
-      dynamicTemplateData: {
-        ...orderRecord,
-        orderTrackingCode,
-        orderStatus,
-        link: `${host}/status?orderTrackingCode=${orderTrackingCode}`,
-        ...orderResult.body,
-      },
+      dynamicTemplateData,
     })
 
     return {

@@ -144,24 +144,6 @@ function Step1({onComplete}) {
         )}
       </section>
 
-      {/* <section>
-        <h3>Submit Request</h3>
-        <div>
-          <label htmlFor="terms">
-            <input
-              id="terms"
-              name="terms"
-              type="checkbox"
-              ref={register({
-                required: true,
-              })}
-            />{' '}
-            I hereby accept the Terms & Conditions and Privacy Policy and give permission to apply
-            for an LEI.
-          </label>
-        </div>
-      </section> */}
-
       {isValid && (
         <div>
           <button type="submit" disabled={isSubmitting}>
