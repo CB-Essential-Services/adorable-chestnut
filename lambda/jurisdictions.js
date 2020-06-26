@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import getRapidLeiClient from './helpers/getRapidLeiClient'
-
 import countryLookup from 'country-code-lookup'
 import stateCodes from 'us-state-codes'
 
