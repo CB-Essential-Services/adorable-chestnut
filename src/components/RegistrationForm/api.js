@@ -16,7 +16,7 @@ export const placeOrder = async (payload) => {
   });
 
   if (body.error) {
-    throw new Error(body.error);
+    return Promise.reject(body.error);
   }
   return body.order;
 };
