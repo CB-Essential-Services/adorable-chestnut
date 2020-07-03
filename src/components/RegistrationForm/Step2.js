@@ -43,15 +43,11 @@ function Step2({state, onComplete}) {
 
   const onSubmit = async (values) => {
     setError();
+    setStripeError();
 
     if (!stripe || !elements) {
       // Stripe.js has not loaded yet. Make sure to disable
       // form submission until Stripe.js has loaded.
-      return;
-    }
-
-    if (stripeError) {
-      elements.getElement('card').focus();
       return;
     }
 
@@ -66,7 +62,8 @@ function Step2({state, onComplete}) {
 
     if (newStripeError) {
       setStripeError(newStripeError);
-      return;
+      elements.getElement('card').focus();
+      return Promise.resolve({success: false});
     }
 
     const payload = {
@@ -82,9 +79,8 @@ function Step2({state, onComplete}) {
       const {orderTrackingCode} = await placeOrder(payload);
       navigate(`/status?orderTrackingCode=${orderTrackingCode}`);
     } catch (error) {
-      const {failureReason} = error;
-      setError(failureReason);
-      return Promise.resolve({success: true});
+      setError(error);
+      return Promise.resolve({success: false});
     }
   };
 
@@ -163,7 +159,14 @@ function Step2({state, onComplete}) {
       </div>
       {/* )} */}
 
-      {error && <div style={{marginTop: '1rem', color: 'red'}}>{error}</div>}
+      {error && (
+        <div style={{marginTop: '1rem', color: 'red'}}>
+          {error.failureReason ||
+            (error.type?.startsWith('StripeCardError') && 'There was an error with your card.')}
+        </div>
+      )}
+
+      {stripeError && <div style={{marginTop: '1rem', color: 'red'}}>{stripeError.message}</div>}
     </form>
   );
 }
