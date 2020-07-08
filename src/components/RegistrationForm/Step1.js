@@ -28,8 +28,7 @@ const CompanySearchByName = ({jurisdiction, ...props}) => {
 
 function Step1({onComplete}) {
   const jurisdictionList = useQuery('jurisdictions', getJurisdictions, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
+    refetchOnWindowFocus: false,
   });
 
   const {
