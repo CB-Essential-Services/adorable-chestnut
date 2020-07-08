@@ -6,8 +6,7 @@ menus:
 sections:
   - bg: gray
     content: >-
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a metus
-      quis lorem malesuada luctus. Cras lacinia, eros at dapibus molestie, risus
+      Lor8243834h25n4n534n5n23ngfrndfnfnvnxcvnx
       tortor pretium ligula.
     section_id: contact
     title: Contact
