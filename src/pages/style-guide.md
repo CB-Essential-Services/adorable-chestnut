@@ -1,12 +1,10 @@
 ---
 menus:
   main:
-    title: Style Guide
+    title: Bang Gang
     weight: 3
 subtitle: >-
-  The style guide provides you with a blueprint of default post and page styles.
-  The style guide is also a great reference for suggested typographic treatment
-  and styles for your content.
+  We are really out here. Trying to learn. To make changes. A failsafe will not kill you. Onward, friend. Onward, love.
 template: page
 title: Style Guide
 ---
