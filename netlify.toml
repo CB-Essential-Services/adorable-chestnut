@@ -2,3 +2,11 @@
   publish = "public"
   command = "npm run build"
   functions = "functions"
+
+[[redirects]]
+  from = "/registration"
+  to = "lei.cbessential.services"
+  status = 301
+  force = false
+  query = {path = ":path"}
+  conditions = {Language = ["en"], Country = ["US"], Role = ["admin"]}
