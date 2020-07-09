@@ -5,8 +5,7 @@
 
 [[redirects]]
   from = "/registration"
-  to = "lei.cbessential.services"
+  to = "https://lei.cbessential.services"
   status = 301
   force = false
   query = {path = ":path"}
-  conditions = {Language = ["en"], Country = ["US"], Role = ["admin"]}
