@@ -26,6 +26,7 @@ const RegistrationForm = () => {
   const Step = StepToComponent[step];
   return (
     <div className="inner" style={{maxWidth: 500}}>
+      <h1>Boop</h1>
       <Elements stripe={stripePromise}>
         <Step onComplete={onComplete} state={state} />
       </Elements>
