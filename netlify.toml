@@ -7,5 +7,4 @@
   from = "/registration"
   to = "https://lei.cbessential.services"
   status = 301
-  force = false
-  query = {path = ":path"}
+  force = true
