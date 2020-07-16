@@ -1,7 +1,7 @@
 ---
 menus:
   main:
-    title: Features
+    title: What We Do
     weight: 2
 sections:
   - actions:
@@ -38,5 +38,5 @@ sections:
     title: This Is Call to Action Block!
     type: section_cta
 template: landing
-title: Features
+title: What We Do
 ---
