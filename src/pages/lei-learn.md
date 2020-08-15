@@ -1,7 +1,7 @@
 ---
 menus:
   main:
-    title: LEIs
+    title: LEI
     weight: 6
 sections:
   - bg: gray
