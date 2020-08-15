@@ -19,6 +19,7 @@
     "@sanity/default-layout": "^0.142.0",
     "@sanity/default-login": "^0.142.0",
     "@sanity/desk-tool": "^0.142.0",
+    "@sanity/production-preview": "^1.149.0",
     "babel-preset-react": "^6.24.1",
     "lerna": "^3.20.2",
     "prop-types": "^15.6",
