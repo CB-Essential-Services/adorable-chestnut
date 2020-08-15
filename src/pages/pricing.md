@@ -7,18 +7,18 @@ sections:
   - bg: gray
     pricingplans:
       - actions:
-          - label: Order Now
-            url: /signup
+          - label: Order New LEI
+            url: /registration
         details: |-
           * A million fendi bags
           * Mauris a mi tincidunt
           * Suspendisse ut lacus
           * Etiam eget dui a augue
-        price: $5/m
+        price: $70/y
         title: Basic
       - actions:
-          - label: Order Now
-            url: /signup
+          - label: Transfer Existing LEI
+            url: /registration
         details: |-
           * Curabitur non nunc mollis
           * Duis a purus nec ligula
@@ -26,21 +26,21 @@ sections:
           * Fusce tempus mi vitae
           * Nullam sollicitudin ante
         highlight: true
-        price: $49/m
+        price: $70/y
         title: Professional
       - actions:
-          - label: Order Now
-            url: /signup
+          - label: Renew LEI
+            url: /registration
         details: |-
           * Vestibulum non eros quis
           * Aenean iaculis lorem
           * Mauris eleifend sapien
           * Phasellus lobortis risus
-        price: $149/m
+        price: $70/y
         title: Enterprise
-    section_id: pricing
+    section_id: LEI pricing
     subtitle: You can have a separate pricing page or list everything on the home page.
-    title: Pricing Plans
+    title: LEI Pricing Plans
     type: section_pricing
   - bg: gray
     faqitems:
