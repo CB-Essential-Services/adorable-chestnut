@@ -1,8 +1,8 @@
 ---
 menus:
   main:
-    title: Pricing
-    weight: 3
+    title: LEI
+    weight: 6
 sections:
   - bg: gray
     pricingplans:
@@ -69,6 +69,6 @@ sections:
     subtitle: 'Phasellus luctus laoreet arcu, vel porta metus imperdiet sit amet.'
     title: Frequently Asked Questions
     type: section_faq
-template: landing
-title: Pricing
+template: registration
+title: LEI
 ---
