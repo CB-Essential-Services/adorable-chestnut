@@ -32,7 +32,7 @@
     "dotenv-flow-webpack": "^1.0.0",
     "fs-extra": "^7.0.1",
     "gatsby": "^2.20.23",
-    "gatsby-cli": "^2.11.5",
+    "gatsby-cli": "^2.12.87",
     "gatsby-plugin-mdx": "^1.1.11",
     "gatsby-plugin-react-helmet": "^3.0.0",
     "gatsby-source-filesystem": "^2.2.2",
