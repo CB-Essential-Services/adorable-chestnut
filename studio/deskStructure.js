@@ -1,21 +1,25 @@
 import S from "@sanity/desk-tool/structure-builder";
 
-function transformType(type) {
-    let schemaType = type.getSchemaType();
-    if (schemaType.singleInstance === true) {
-        return type.child(
-            S.editor()
-                .id(schemaType.name)
-                .schemaType(schemaType.name)
-                .documentId(schemaType.name)
-        )
-    }
-    return type;
+// Simple example of web preview
+const url = 'http://localhost:8000/';
+const WebPreview = ({document}) => {
+  const {displayed} = document
+  return (
+    <iframe 
+      src={url + displayed.slug.current} 
+      frameBorder={0} 
+    />
+  )
 }
 
-export default () =>
-    S.list()
-        .title("Content")
-        .items([
-            ...S.documentTypeListItems().map(transformType)
-        ]);
+export const getDefaultDocumentNode = ({schemaType}) => {
+ // Conditionally return a different configuration based on the schema type
+ if (schemaType === "project") {
+   return S.document().views([
+     S.view.form(),
+     S.view.component(WebPreview).title('Web')
+   ])  
+ }
+}
+
+export default S.defaults()

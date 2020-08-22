@@ -11,33 +11,9 @@ export default {
             "validation": null,
             "of": [
                 {
-                    "type": "object",
-                    "fields": [
-                        {
-                            "type": "string",
-                            "name": "type",
-                            "title": "Type",
-                            "hidden": true,
-                            "validation": null
-                        },
-                        {
-                            "type": "string",
-                            "name": "title",
-                            "title": "Title",
-                            "validation": Rule => Rule.required()
-                        },
-                        {
-                            "type": "string",
-                            "name": "url",
-                            "title": "URL",
-                            "validation": Rule => Rule.required()
-                        }
-                    ],
-                    "preview": {
-                        "select": {
-                            "title": "title"
-                        }
-                    }
+                    "type": "social_link_props",
+                    "name": "social_link_props",
+                    "title": "Social Link Props",
                 }
             ]
         },
