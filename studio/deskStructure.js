@@ -1,23 +1,23 @@
+import React from 'react';
 import S from "@sanity/desk-tool/structure-builder";
+import EyeIcon from 'part:@sanity/base/eye-icon';
+import EditIcon from 'part:@sanity/base/edit-icon';
+import PreviewIFrame from './src/components/previewIFrame'
 
-// Simple example of web preview
-const url = 'http://localhost:8000/';
-const WebPreview = ({document}) => {
-  const {displayed} = document
-  return (
-    <iframe 
-      src={url + displayed.slug.current} 
-      frameBorder={0} 
-    />
-  )
-}
+// Web preview configuration
+const remoteURL = 'https://cbessential.services/'
+const localURL = 'http://localhost:8000'
+const previewURL = window.location.hostname === 'localhost' ? localURL : remoteURL
 
 export const getDefaultDocumentNode = ({schemaType}) => {
  // Conditionally return a different configuration based on the schema type
- if (schemaType === "project") {
+ if (schemaType === "post") {
    return S.document().views([
-     S.view.form(),
-     S.view.component(WebPreview).title('Web')
+    S.view.form().icon(EditIcon),
+    S.view.component(PreviewIFrame)
+      .options({previewURL})
+      .title('Web Preview')
+      .icon(EyeIcon),
    ])  
  }
 }

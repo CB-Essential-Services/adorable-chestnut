@@ -1,6 +1,6 @@
 const env = process.env.NODE_ENV || 'development'
 
-export default function resolvePreviewUrl(document) {
+export default function previewURL(document) {
   const baseUrl = env === 'development' ? 'http://localhost:8000' : ''
   switch (document._type) {
     case 'route':
