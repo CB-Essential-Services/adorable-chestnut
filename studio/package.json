@@ -23,6 +23,7 @@
     "@sanity/desk-tool": "^1.150.1",
     "@sanity/production-preview": "^1.150.1",
     "babel-preset-react": "^6.24.1",
+    "bl": "4.0.3",
     "gatsby-source-sanity": "^6.0.4",
     "lerna": "^3.20.2",
     "prop-types": "^15.6",

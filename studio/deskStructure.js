@@ -5,7 +5,7 @@ import EditIcon from 'part:@sanity/base/edit-icon';
 import PreviewIFrame from './src/components/previewIFrame'
 
 // Web preview configuration
-const remoteURL = 'https://cbessential.services/'
+const remoteURL = 'https://adorable-chestnut-master-6453652837.gtsb.io/'
 const localURL = 'http://localhost:8000'
 const previewURL = window.location.hostname === 'localhost' ? localURL : remoteURL
 

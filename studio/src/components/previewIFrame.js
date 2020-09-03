@@ -10,7 +10,7 @@ const assembleProjectUrl = ({displayed, options}) => {
     console.warn('Missing slug or previewURL', {slug, previewURL})
     return ''
   }
-  return `${previewURL}/project/${slug.current}`
+  return `${previewURL}/${slug.current}`
 }
 
 class previewIFrame extends React.PureComponent {
