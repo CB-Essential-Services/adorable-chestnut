@@ -1,24 +1,12 @@
 const env = process.env.NODE_ENV || 'development'
 
-export default function previewURL(document) {
-  const baseUrl = env === 'development' ? 'http://localhost:8000' : ''
-  switch (document._type) {
-    case 'route':
-      if (!document.slug || !document.slug.current) {
-        return baseUrl
-      }
-      return `${baseUrl}/${document.slug.current}`
-    case 'post':
-      return `${baseUrl}/blog/${document.slug.current}`
-    case 'siteSettings':
-      return baseUrl
-    case 'page':
-      if (document._id === 'frontpage' || document._id === 'drafts.frontpage') {
-        return baseUrl
-      }
-      return null
-    default:
-      return null
+  const baseUrl = env === 'development' ? 'https://adorable-chestnut-master-6453652837.gtsb.io/' : ''
+  
+  export default function PreviewURL(document) {
+    switch (document._type) {
+      case 'page': return `${baseURL}/${document.slug.current}`;
+      case 'post': return `${baseURL}/post/${document.id}`;
+      case 'author': return `${baseURL}/info/people/${document.slug.current}`;
+      default: return baseURL;
+    }
   }
-}
-
