@@ -11,7 +11,7 @@
   "dependencies": {
     "-": "0.0.1",
     "@babel/plugin-transform-react-jsx-source": "^7.9.0",
-    "@bit/mcb-11561.lei.lookup-form": "^0.0.1",
+    "@bit/mcb-11561.lei.lookup-form": "0.0.1",
     "@sanity/base": "^1.150.7",
     "@sanity/cli": "^1.150.7",
     "@sanity/color-input": "^1.150.1",
