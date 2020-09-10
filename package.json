@@ -12,7 +12,8 @@
     "build-stackbit": "./stackbit-build.sh",
     "serve": "lerna bootstrap && gatsby serve",
     "serve-preview": "NODE_ENV=development gatsby develop --host 0.0.0.0 --p http://localhost:8000/",
-    "postinstall": "netlify-lambda install"
+    "postinstall": "netlify-lambda install",
+    "heroku-postbuild": "./stackbit-build.sh"
   },
   "dependencies": {
     "-": "0.0.1",
