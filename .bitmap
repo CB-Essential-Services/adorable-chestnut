@@ -61,6 +61,44 @@
         "origin": "AUTHORED",
         "exported": false
     },
+    "mcb-11561.lei/lookup-form@0.0.1": {
+        "files": [
+            {
+                "name": "LeiRecord.js",
+                "relativePath": "LeiRecord.js",
+                "test": false
+            },
+            {
+                "name": "LookupForm.js",
+                "relativePath": "LookupForm.js",
+                "test": false
+            },
+            {
+                "name": "LookupForm.module.css",
+                "relativePath": "LookupForm.module.css",
+                "test": false
+            },
+            {
+                "name": "index.js",
+                "relativePath": "index.js",
+                "test": false
+            },
+            {
+                "name": "u",
+                "relativePath": "u",
+                "test": false
+            },
+            {
+                "name": "useApi.js",
+                "relativePath": "useApi.js",
+                "test": false
+            }
+        ],
+        "mainFile": "index.js",
+        "rootDir": "components/lookup-form",
+        "origin": "IMPORTED",
+        "originallySharedDir": "web/components/LookupForm"
+    },
     "mcb-11561.lei/order-status@0.0.1": {
         "files": [
             {
