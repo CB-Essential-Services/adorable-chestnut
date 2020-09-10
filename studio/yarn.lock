@@ -847,7 +847,7 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@bit/mcb-11561.lei.lookup-form@^0.0.1":
+"@bit/mcb-11561.lei.lookup-form@0.0.1":
   version "0.0.1"
   resolved "https://node.bit.dev/mcb-11561.lei.lookup-form/-/mcb-11561.lei.lookup-form-0.0.1.tgz#cbb710a7b2f6c57d52e10cff53f83ce475612532"
   dependencies:
