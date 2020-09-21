@@ -1,8 +1,4 @@
 ---
-menus:
-  main:
-    title: Pricing
-    weight: 3
 sections:
   - bg: gray
     pricingplans:

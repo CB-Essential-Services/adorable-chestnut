@@ -1,8 +1,4 @@
 ---
-menus:
-  main:
-    title: Home
-    weight: 1
 sections:
   - actions:
       - label: Learn More
