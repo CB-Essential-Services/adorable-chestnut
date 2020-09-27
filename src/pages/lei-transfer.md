@@ -1,4 +1,4 @@
 ---
-template: page
+template: transfer
 title: Transfer LEI
 ---
