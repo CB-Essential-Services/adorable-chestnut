@@ -47,13 +47,6 @@ function Step1({state, onComplete}) {
         .join('&')
     }
 
-    export default function Step1() {
-      const [state, setState] = React.useState({})
-    
-      const handleChange = (e) => {
-        setState({ ...state, [e.target.name]: e.target.value })
-      }
-
     const handleSubmit = (e) => {
       e.preventDefault()
       const form = e.target
@@ -193,3 +186,5 @@ function Step1({state, onComplete}) {
     </form>
   );
 }
+
+export default Step1;
