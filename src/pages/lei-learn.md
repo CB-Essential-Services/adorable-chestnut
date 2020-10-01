@@ -35,12 +35,7 @@ sections:
     subtitle: 'Phasellus luctus laoreet arcu, vel porta metus imperdiet sit amet.'
     title: Frequently Asked Questions
     type: section_faq
-<<<<<<< HEAD
-template: registration
-title: LEI
-=======
 template: landing
 title: LEI Learn
 subtitle: Discover the history, current uses, and future potential for Legal Entity Identifiers
->>>>>>> master
 ---
