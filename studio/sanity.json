@@ -15,13 +15,9 @@
     "@sanity/desk-tool",
     "markdown",
     "@sanity/color-input",
-<<<<<<< HEAD
-    "@sanity/production-preview"
-=======
     "@sanity/production-preview",
     "@sanity/dashboard",
     "dashboard-widget-gatsby"
->>>>>>> master
   ],
   "parts": [
     {

@@ -1,14 +1,4 @@
 [build]
   publish = "public"
   command = "npm run build"
-<<<<<<< HEAD
   functions = "functions"
-
-[[redirects]]
-  from = "/registration"
-  to = "https://lei.cbessential.services"
-  status = 301
-  force = true
-=======
-  functions = "functions"
->>>>>>> master

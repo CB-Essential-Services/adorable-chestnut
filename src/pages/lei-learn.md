@@ -1,49 +1,4 @@
 ---
-<<<<<<< HEAD
-menus:
-  main:
-    title: LEI
-    weight: 6
-sections:
-  - bg: gray
-    pricingplans:
-      - actions:
-          - label: Order New LEI
-            url: /registration
-        details: |-
-          * A million fendi bags
-          * Mauris a mi tincidunt
-          * Suspendisse ut lacus
-          * Etiam eget dui a augue
-        price: $70/y
-        title: Basic
-      - actions:
-          - label: Transfer Existing LEI
-            url: /registration
-        details: |-
-          * Curabitur non nunc mollis
-          * Duis a purus nec ligula
-          * Pellentesque sit amet
-          * Fusce tempus mi vitae
-          * Nullam sollicitudin ante
-        highlight: true
-        price: $70/y
-        title: Professional
-      - actions:
-          - label: Renew LEI
-            url: /registration
-        details: |-
-          * Vestibulum non eros quis
-          * Aenean iaculis lorem
-          * Mauris eleifend sapien
-          * Phasellus lobortis risus
-        price: $70/y
-        title: Enterprise
-    section_id: LEI pricing
-    subtitle: You can have a separate pricing page or list everything on the home page.
-    title: LEI Pricing Plans
-    type: section_pricing
-=======
 sections:
   - bg: gray
     content: >-
@@ -53,7 +8,6 @@ sections:
     section_id: contact
     title: Contact
     type: section_contact
->>>>>>> master
   - bg: gray
     faqitems:
       - answer: >-
