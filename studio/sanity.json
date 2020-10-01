@@ -15,7 +15,13 @@
     "@sanity/desk-tool",
     "markdown",
     "@sanity/color-input",
+<<<<<<< HEAD
     "@sanity/production-preview"
+=======
+    "@sanity/production-preview",
+    "@sanity/dashboard",
+    "dashboard-widget-gatsby"
+>>>>>>> master
   ],
   "parts": [
     {
@@ -28,7 +34,15 @@
     },
     {
       "implements": "part:@sanity/production-preview/resolve-production-url",
+<<<<<<< HEAD
       "path": "./resolveProductionUrl.js"
+=======
+      "path": "./previewURL.js"
+    },
+    {
+      "implements": "part:@sanity/dashboard/config",
+      "path": "dashboardConfig.js"
+>>>>>>> master
     }
   ]
 }

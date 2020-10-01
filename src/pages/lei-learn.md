@@ -1,4 +1,5 @@
 ---
+<<<<<<< HEAD
 menus:
   main:
     title: LEI
@@ -42,6 +43,17 @@ sections:
     subtitle: You can have a separate pricing page or list everything on the home page.
     title: LEI Pricing Plans
     type: section_pricing
+=======
+sections:
+  - bg: gray
+    content: >-
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a metus
+      quis lorem malesuada luctus. Cras lacinia, eros at dapibus molestie, risus
+      tortor pretium ligula.
+    section_id: contact
+    title: Contact
+    type: section_contact
+>>>>>>> master
   - bg: gray
     faqitems:
       - answer: >-
@@ -69,6 +81,12 @@ sections:
     subtitle: 'Phasellus luctus laoreet arcu, vel porta metus imperdiet sit amet.'
     title: Frequently Asked Questions
     type: section_faq
+<<<<<<< HEAD
 template: registration
 title: LEI
+=======
+template: landing
+title: LEI Learn
+subtitle: Discover the history, current uses, and future potential for Legal Entity Identifiers
+>>>>>>> master
 ---

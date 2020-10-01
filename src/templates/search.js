@@ -8,8 +8,17 @@ export default class Landing extends React.Component {
         return (
             <Layout {...this.props}>
                 <div className="outer">
+<<<<<<< HEAD
                     <LookupForm />
                 </div>
+=======
+                <div style={{width: '55%', maxWidth: '40rem', margin: '0 auto'}}>
+                <h3>Welcome</h3>
+                <p>Search any LEI from all over the stupid globe 😁</p>
+                    <LookupForm />
+                </div>
+                </div>
+>>>>>>> master
             </Layout>
         );
     }

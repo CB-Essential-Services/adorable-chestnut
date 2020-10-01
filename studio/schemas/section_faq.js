@@ -45,27 +45,10 @@ export default {
             "validation": null,
             "of": [
                 {
-                    "type": "object",
-                    "fields": [
-                        {
-                            "type": "string",
-                            "name": "question",
-                            "title": "Question",
-                            "validation": null
-                        },
-                        {
-                            "type": "markdown",
-                            "name": "answer",
-                            "title": "Answer",
-                            "validation": null
-                        }
-                    ],
-                    "preview": {
-                        "select": {
-                            "title": "question"
-                        }
-                    }
-                }
+                    "type": "section_faq_props",
+                    "name": "section_faq_props",
+                    "title": "Section FAQ Props",
+                }   
             ]
         },
         {

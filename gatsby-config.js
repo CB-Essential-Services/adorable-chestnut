@@ -1,3 +1,7 @@
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`
+})
+
 const {createProxyMiddleware} = require('http-proxy-middleware'); //v1.x.x
 
 module.exports = {
@@ -41,6 +45,16 @@ module.exports = {
       resolve: `gatsby-remark-page-creator`,
       options: {},
     },
+    {
+      resolve: 'gatsby-source-sanity',
+      options: {
+        projectId: '14ro5hmo',
+        dataset: 'production',
+        token: process.env.SANITY_READ_TOKEN,
+        watchMode: true,
+        overlayDrafts: true,
+    },
+  },
     {
       resolve: `@stackbit/gatsby-plugin-menus`,
       options: {
