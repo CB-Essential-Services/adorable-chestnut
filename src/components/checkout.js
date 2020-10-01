@@ -1,5 +1,12 @@
-import React, { useState } from "react"
-import { loadStripe } from "@stripe/stripe-js"
+import React, { useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { navigate } from 'gatsby-link'
+
+function encode(data) {
+    return Object.keys(data)
+      .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+      .join('&')
+  }
 
 const buttonStyles = {
   fontSize: "13px",
@@ -20,7 +27,7 @@ const buttonDisabledStyles = {
 let stripePromise
 const getStripe = () => {
   if (!stripePromise) {
-    stripePromise = loadStripe("<pk_test_RlvibjeKdvwY81acv2YLwvTM00I3UsWXIi>")
+    stripePromise = loadStripe("pk_test_RlvibjeKdvwY81acv2YLwvTM00I3UsWXIi")
   }
   return stripePromise
 }
@@ -34,10 +41,10 @@ const Checkout = () => {
 
     const stripe = await getStripe()
     const { error } = await stripe.redirectToCheckout({
-      mode: "payment",
-      lineItems: [{ price: "price_1GriHeAKu92npuros981EDUL", quantity: 1 }],
+      mode: "subscription",
+      lineItems: [{ price: "price_1Gva5YAeKYVunD5viRkFzoR7", quantity: 1 }],
       successUrl: `http://localhost:8000/thanks/`,
-      cancelUrl: `http://localhost:8000/`,
+      cancelUrl: `http://localhost:8000/404`,
     })
 
     if (error) {
@@ -46,16 +53,78 @@ const Checkout = () => {
     }
   }
 
+  const [state, setState] = React.useState({})
+
+  const handleChange = (e) => {
+    setState({ ...state, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const form = e.target
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encode({
+        'form-name': form.getAttribute('name'),
+        ...state,
+      }),
+    })
+      .then(() => navigate(form.getAttribute('action')))
+      .catch((error) => alert(error))
+  }
+
   return (
-    <button
+    <form 
+    name="transferLEI" 
+    method="post" 
+    data-netlify="true" 
+    data-netlify-honeypot="bot-field"
+    id="transfer-LEI"
+    className="transfer-LEI"
+    onSubmit={handleSubmit}
+  >
+    {/* The `form-name` hidden field is required to support form submissions without JavaScript */}
+    <input type="hidden" name="form-name" value="transferLEI" />
+    <p hidden>
+      <label>
+        Don’t fill this out: <input name="bot-field" onChange={handleChange} />
+      </label>
+    </p>
+    <p>
+      <label>
+        Your name:
+        <br />
+        <input type="text" name="name" onChange={handleChange} />
+      </label>
+    </p>
+    <p>
+      <label>
+        Your email:
+        <br />
+        <input type="email" name="email" onChange={handleChange} />
+      </label>
+    </p>
+    <p>
+      <label>
+        Message:
+        <br />
+        <textarea name="message" onChange={handleChange} />
+      </label>
+    </p>
+    <p>
+    <button className="button"
+    type="submit"
       disabled={loading}
       style={
         loading ? { ...buttonStyles, ...buttonDisabledStyles } : buttonStyles
       }
       onClick={redirectToCheckout}
     >
-      BUY MY BOOK
+      Pay
     </button>
+    </p>
+    </form>
   )
 }
 

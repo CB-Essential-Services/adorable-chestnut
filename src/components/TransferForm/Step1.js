@@ -17,12 +17,6 @@ function encode(data) {
   export default function Step1() {
     const [state, setState] = React.useState({})
 
-  const stripe = useStripe();
-  const elements = useElements();
-
-  const [stripeError, setStripeError] = React.useState();
-  const [error, setError] = React.useState();
-
     const {
       register,
       control,
@@ -114,15 +108,6 @@ function encode(data) {
         <p>
           <button type="submit">Send</button>
         </p>
-        
-        {error && (
-        <div style={{marginTop: '1rem', color: 'red'}}>
-          {error.failureReason ||
-            (error.type?.startsWith('StripeCardError') && 'There was an error with your card.')}
-        </div>
-      )}
-
-      {stripeError && <div style={{marginTop: '1rem', color: 'red'}}>{stripeError.message}</div>}
       </form>
         );
     }
