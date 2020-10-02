@@ -1,26 +1,16 @@
-import React, { useState } from "react"
-import { loadStripe } from "@stripe/stripe-js"
+import React, { useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
 
-const buttonStyles = {
-  fontSize: "13px",
-  textAlign: "center",
-  color: "#000",
-  padding: "12px 60px",
-  boxShadow: "2px 5px 10px rgba(0,0,0,.1)",
-  backgroundColor: "rgb(255, 178, 56)",
-  borderRadius: "6px",
-  letterSpacing: "1.5px",
-}
-
-const buttonDisabledStyles = {
-  opacity: "0.5",
-  cursor: "not-allowed",
-}
+function encode(data) {
+    return Object.keys(data)
+      .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+      .join('&')
+  }
 
 let stripePromise
 const getStripe = () => {
   if (!stripePromise) {
-    stripePromise = loadStripe("<pk_test_RlvibjeKdvwY81acv2YLwvTM00I3UsWXIi>")
+    stripePromise = loadStripe("pk_test_RlvibjeKdvwY81acv2YLwvTM00I3UsWXIi")
   }
   return stripePromise
 }
@@ -34,10 +24,10 @@ const Checkout = () => {
 
     const stripe = await getStripe()
     const { error } = await stripe.redirectToCheckout({
-      mode: "payment",
-      lineItems: [{ price: "price_1GriHeAKu92npuros981EDUL", quantity: 1 }],
+      mode: "subscription",
+      lineItems: [{ price: "price_1Gva5YAeKYVunD5viRkFzoR7", quantity: 1 }],
       successUrl: `http://localhost:8000/thanks/`,
-      cancelUrl: `http://localhost:8000/`,
+      cancelUrl: `http://localhost:8000/404`,
     })
 
     if (error) {
@@ -46,16 +36,36 @@ const Checkout = () => {
     }
   }
 
-  return (
-    <button
-      disabled={loading}
-      style={
-        loading ? { ...buttonStyles, ...buttonDisabledStyles } : buttonStyles
-      }
-      onClick={redirectToCheckout}
-    >
-      BUY MY BOOK
-    </button>
+  return (    
+<form
+    name="transfer"
+    method="POST"
+    action="/thanks"
+    data-netlify-honeypot="bot-field"
+    data-netlify="true"
+    id="transfer"
+    className="transfer"
+>
+    <p className="screen-reader-text">
+        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+    </p>
+    <p className="form-row">
+        <label htmlFor="transfer-name" className="form-label">Name</label>
+        <input type="text" name="name" id="transfer-name" className="form-input" />
+    </p>
+    <p className="form-row">
+        <label htmlFor="transfer-email" className="form-label">Email address</label>
+        <input type="email" name="email" id="transfer-email" className="form-input" />
+    </p>
+    <input type="hidden" name="form-name" value="transfer" />
+    <p className="form-row form-submit">
+        <button type="submit" className="button" 
+        disabled={loading}
+      onClick={redirectToCheckout}>
+          Pay
+          </button>
+    </p>
+</form>
   )
 }
 

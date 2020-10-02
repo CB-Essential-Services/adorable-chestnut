@@ -30,11 +30,15 @@
     },
     {
       "implements": "part:@sanity/production-preview/resolve-production-url",
+<<<<<<< HEAD
+      "path": "./resolveProductionUrl.js"
+=======
       "path": "./previewURL.js"
     },
     {
       "implements": "part:@sanity/dashboard/config",
       "path": "dashboardConfig.js"
+>>>>>>> master
     }
   ]
 }

@@ -61,6 +61,8 @@
         "origin": "AUTHORED",
         "exported": false
     },
+<<<<<<< HEAD
+=======
     "mcb-11561.lei/lookup-form@0.0.1": {
         "files": [
             {
@@ -99,6 +101,7 @@
         "origin": "IMPORTED",
         "originallySharedDir": "web/components/LookupForm"
     },
+>>>>>>> master
     "mcb-11561.lei/order-status@0.0.1": {
         "files": [
             {
