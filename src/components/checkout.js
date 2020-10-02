@@ -75,7 +75,7 @@ const Checkout = () => {
   }
 
   return (
-<form name="transferlei" method="POST" id="transfer-lei" class="transferlei">
+<form name="transferlei" method="POST" data-netlify="true" id="transfer-lei" class="transferlei">
     <p class="form-row">
         <label id="transfer-lei-name-label" for="transfer-lei-name" class="form-label">Name</label>
         <input type="text" name="name" id="transfer-lei-name" aria-labelledby="transfer-lei-name-label" class="form-input" />
