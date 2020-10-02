@@ -38,27 +38,29 @@ const Checkout = () => {
 
   return (    
 <form
-    name="extend"
+    name="transfer"
     method="POST"
+    action="/thanks"
     data-netlify-honeypot="bot-field"
     data-netlify="true"
-    id="extend"
-    className="extend"
+    id="transfer"
+    className="transfer"
 >
     <p className="screen-reader-text">
         <label>Don't fill this out if you're human: <input name="bot-field" /></label>
     </p>
     <p className="form-row">
-        <label htmlFor="extend-name" className="form-label">Name</label>
-        <input type="text" name="name" id="extend-name" className="form-input" />
+        <label htmlFor="transfer-name" className="form-label">Name</label>
+        <input type="text" name="name" id="transfer-name" className="form-input" />
     </p>
     <p className="form-row">
-        <label htmlFor="extend-email" className="form-label">Email address</label>
-        <input type="email" name="email" id="extend-email" className="form-input" />
+        <label htmlFor="transfer-email" className="form-label">Email address</label>
+        <input type="email" name="email" id="transfer-email" className="form-input" />
     </p>
-    <input type="hidden" name="form-name" value="extend" />
+    <input type="hidden" name="form-name" value="transfer" />
     <p className="form-row form-submit">
-        <button className="button" type="submit" 
+        <button type="submit" className="button" 
+        disabled={loading}
       onClick={redirectToCheckout}>
           Pay
           </button>
