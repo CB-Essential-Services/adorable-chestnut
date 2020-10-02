@@ -36,11 +36,27 @@ const Checkout = () => {
     }
   }
 
+  const processForm = form => {
+    const data = new FormData(form)
+    data.append('form-name', 'transfer');
+    fetch('/', {
+      method: 'POST',
+      body: data,
+    })
+
+    const transfer = document.querySelector('.transfer')
+if (transfer) {
+  transfer.addEventListener('submit', e => {
+    e.preventDefault();
+    processForm(transfer);
+  })
+}
+
   return (    
 <form
     name="transfer"
     method="POST"
-    action="/thanks"
+    onSubmit={handleSubmit}
     data-netlify-honeypot="bot-field"
     data-netlify="true"
     id="transfer"
