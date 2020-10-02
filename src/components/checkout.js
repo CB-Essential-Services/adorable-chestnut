@@ -75,56 +75,23 @@ const Checkout = () => {
   }
 
   return (
-    <form 
-    name="transferLEI" 
-    method="post" 
-    data-netlify="true" 
-    data-netlify-honeypot="bot-field"
-    id="transfer-LEI"
-    className="transfer-LEI"
-    onSubmit={handleSubmit}
-  >
-    {/* The `form-name` hidden field is required to support form submissions without JavaScript */}
-    <input type="hidden" name="form-name" value="transferLEI" />
-    <p hidden>
-      <label>
-        Don’t fill this out: <input name="bot-field" onChange={handleChange} />
-      </label>
+<form name="transferlei" method="POST" id="transfer-lei" class="transferlei">
+    <p class="form-row">
+        <label id="transfer-lei-name-label" for="transfer-lei-name" class="form-label">Name</label>
+        <input type="text" name="name" id="transfer-lei-name" aria-labelledby="transfer-lei-name-label" class="form-input" />
     </p>
-    <p>
-      <label>
-        Your name:
-        <br />
-        <input type="text" name="name" onChange={handleChange} />
-      </label>
+    <p class="form-row">
+        <label id="transfer-lei-email-label" for="transfer-lei-email" class="form-label">Email address</label>
+        <input type="email" name="email" id="transfer-lei-email" aria-labelledby="transfer-lei-email-label" class="form-input" />
     </p>
-    <p>
-      <label>
-        Your email:
-        <br />
-        <input type="email" name="email" onChange={handleChange} />
-      </label>
-    </p>
-    <p>
-      <label>
-        Message:
-        <br />
-        <textarea name="message" onChange={handleChange} />
-      </label>
-    </p>
-    <p>
-    <button className="button"
-    type="submit"
-      disabled={loading}
+    <p class="form-row form-submit">
+        <button type="submit" class="button" disabled={loading}
       style={
         loading ? { ...buttonStyles, ...buttonDisabledStyles } : buttonStyles
       }
-      onClick={redirectToCheckout}
-    >
-      Pay
-    </button>
+      onClick={redirectToCheckout}>Pay</button>
     </p>
-    </form>
+</form>
   )
 }
 
