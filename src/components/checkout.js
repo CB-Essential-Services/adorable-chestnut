@@ -25,7 +25,7 @@ const Checkout = () => {
     const stripe = await getStripe()
     const { error } = await stripe.redirectToCheckout({
       mode: "subscription",
-      lineItems: [{ price: "price_1Gva5YAeKYVunD5viRkFzoR7"}],
+      lineItems: [{ price: "price_1Gva5YAeKYVunD5viRkFzoR7", quantity: 1 }],
       successUrl: `http://localhost:8000/thanks/`,
       cancelUrl: `http://localhost:8000/404`,
     })
