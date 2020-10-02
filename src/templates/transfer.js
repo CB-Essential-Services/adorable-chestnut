@@ -1,5 +1,5 @@
 import React from 'react';
-import Checkout from '../components/checkout';
+import TransferForm from '../components/TransferForm';
 
 import {Layout} from '../components/index';
 
@@ -11,7 +11,7 @@ export default class Landing extends React.Component {
                 <div style={{width: '55%', maxWidth: '40rem', margin: '0 auto'}}>
                 <h1>Transfer LEI</h1>
                 <p>Move a registered Legal Entity Identifer under our management.</p>
-                    <Checkout />
+                    <TransferForm />
                 </div>
                 </div>
             </Layout>

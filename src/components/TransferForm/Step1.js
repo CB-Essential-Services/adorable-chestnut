@@ -81,6 +81,7 @@ function encode(data) {
             <textarea name="message" onChange={handleChange} />
           </label>
         </p>
+
         <section>
         <h3>Payment Method</h3>
         <Field>

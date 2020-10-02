@@ -40,7 +40,7 @@ const Checkout = () => {
 <form
     name="transfer"
     method="POST"
-    onSubmit={handleSubmit}
+    action="/thanks"
     data-netlify-honeypot="bot-field"
     data-netlify="true"
     id="transfer"

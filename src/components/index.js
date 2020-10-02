@@ -13,6 +13,7 @@ import SectionReviews from './SectionReviews';
 import Social from './Social';
 import SubscribeForm from './SubscribeForm';
 import Layout from './Layout';
+import TransferForm from './TransferForm';
 import checkout from './checkout'
 
 export {
@@ -31,6 +32,7 @@ export {
     Social,
     SubscribeForm,
     Layout,
+    TransferForm,
     checkout
 };
 
@@ -50,5 +52,6 @@ export default {
     Social,
     SubscribeForm,
     Layout,
+    TransferForm,
     checkout
 };
