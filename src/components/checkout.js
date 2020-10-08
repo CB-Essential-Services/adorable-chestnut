@@ -42,6 +42,7 @@ const Checkout = () => {
 <form
     name="transfer"
     method="POST"
+    content-type= "application/x-www-form-urlencoded;charset=UTF-8"
     action="/thanks"
     data-netlify-honeypot="bot-field"
     data-netlify="true"
