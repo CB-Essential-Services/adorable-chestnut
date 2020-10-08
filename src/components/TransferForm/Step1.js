@@ -85,7 +85,7 @@ function Step1({onComplete}) {
   };
   
         return (
-      <form name="transfer" method="post" action="/thanks/" data-netlify="true" data-netlify-honeypot="bot-field"
+      <form name="transfer" method="post" action="/thanks/" Content-Type="application/x-www-form-urlencoded" data-netlify="true" data-netlify-honeypot="bot-field"
         onSubmit={handleSubmit}
       >
         {/* The `form-name` hidden field is required to support form submissions without JavaScript */}
