@@ -42,8 +42,7 @@ const Checkout = () => {
 <form
     name="transfer"
     method="POST"
-    content-type= "application/x-www-form-urlencoded;charset=UTF-8"
-    action="/thanks"
+    content-type= "application/x-www-form-urlencoded"
     data-netlify-honeypot="bot-field"
     data-netlify="true"
     id="transfer"
@@ -60,7 +59,7 @@ const Checkout = () => {
         <label htmlFor="transfer-email" className="form-label">Email address</label>
         <input type="email" name="email" id="transfer-email" className="form-input" />
     </p>
-    <input type="hidden" name="form-name" value="transfer" />
+    <input type="hidden" name="transfer" value="transfer" />
     <p className="form-row form-submit">
         <button type="submit" className="button" 
         disabled={loading}
