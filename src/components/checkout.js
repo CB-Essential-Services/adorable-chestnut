@@ -33,6 +33,7 @@ function encode(data) {
 }
 
 export default function Checkout() {
+
   const [state, setState] = React.useState({})
 
   const handleChange = (e) => {
@@ -85,7 +86,7 @@ export default function Checkout() {
           </label>
         </p>
         <p>
-        <button type = "submit" onClick={redirectToCheckout.bind(this)}>Pay</button>
+        <button type = "submit" onClickCapture={redirectToCheckout}>Pay</button>
         </p>
       </form>
   )
