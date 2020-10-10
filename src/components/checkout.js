@@ -86,7 +86,7 @@ export default function Checkout() {
         </p>
         <p>
           <button type="submit" 
-            onClick={redirectToCheckout}>Pay</button>
+            >Pay</button>
         </p>
       </form>
   )
