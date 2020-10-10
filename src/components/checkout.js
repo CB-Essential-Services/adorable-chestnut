@@ -62,7 +62,8 @@ export default function Checkout() {
         action="/thanks/"
         data-netlify="true"
         data-netlify-honeypot="bot-field"
-        onSubmit={e => handleSubmit, redirectToCheckout}
+        onSubmit={event => this.handleSubmit(event)}
+        onSuccess={event => this.redirectToCheckout(event)}
       >
         {/* The `form-name` hidden field is required to support form submissions without JavaScript */}
         <input type="hidden" name="form-name" value="transfer" />
