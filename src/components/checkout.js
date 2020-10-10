@@ -50,9 +50,9 @@ export default function Checkout() {
         ...state,
       }),
     })
-      .then(() => navigate(form.getAttribute('action')))
+    .then(() => console.log(`OK`)) // navigate to desired page
       .catch((error) => alert(error))
-  }
+  };
 
   return (
       <form
@@ -85,8 +85,7 @@ export default function Checkout() {
           </label>
         </p>
         <p>
-          <button type="submit" 
-            >Pay</button>
+        <button type = "submit" onClick={redirectToCheckout.bind(this)}>Pay</button>
         </p>
       </form>
   )
