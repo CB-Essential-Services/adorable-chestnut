@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 
-import _ from 'lodash';
-
-function encode(data) {
-    return Object.keys(data)
-      .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
-      .join('&')
-  }
-
 let stripePromise
 const getStripe = () => {
   if (!stripePromise) {
@@ -36,7 +28,22 @@ const Checkout = () => {
       console.warn("Error:", error)
       setLoading(false)
     }
-  }
+  };
+
+  const {
+    handleSubmit,
+  } = ({
+    mode: 'onChange',
+    defaultValues: {},
+  });
+
+  const onSubmit = async (values) => {};
+
+  const [state, setState] = React.useState({})
+
+  const handleChange = (e) => {
+    setState({ ...state, [e.target.name]: e.target.value })
+  };
 
   return (    
 <form
@@ -47,17 +54,18 @@ const Checkout = () => {
     data-netlify="true"
     id="transfer"
     className="transfer"
+    onSubmit={handleSubmit}
 >
     <p className="screen-reader-text">
-        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+        <label>Don't fill this out if you're human: <input name="bot-field" onChange={handleChange}/></label>
     </p>
     <p className="form-row">
         <label htmlFor="transfer-name" className="form-label">Name</label>
-        <input type="text" name="name" id="transfer-name" className="form-input" />
+        <input type="text" name="name" id="transfer-name" className="form-input" onChange={handleChange}/>
     </p>
     <p className="form-row">
         <label htmlFor="transfer-email" className="form-label">Email address</label>
-        <input type="email" name="email" id="transfer-email" className="form-input" />
+        <input type="email" name="email" id="transfer-email" className="form-input" onChange={handleChange} />
     </p>
     <input type="hidden" name="transfer" value="transfer" />
     <p className="form-row form-submit">
