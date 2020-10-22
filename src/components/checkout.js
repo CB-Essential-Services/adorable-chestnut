@@ -16,7 +16,6 @@ const getStripe = () => {
 };
 
   const redirectToCheckout = async event => {
-    event.preventDefault()
 
     const stripe = await getStripe()
     const { error } = await stripe.redirectToCheckout({
@@ -59,12 +58,12 @@ const Checkout = (props) => {
     })
       // On success, redirect to the custom success page using Gatsby's `navigate` helper function
       .then(() => redirectToCheckout())
-       // On error, show the error in an alert
+             // On error, show the error in an alert
       .catch(error => alert(error));
   };
 
   return (
-    <form data-netlify="true" action="/" name="transfer" method="post" onSubmit={handleSubmit}>
+    <form data-netlify="true" action="/" name="transfer" method="post" onSubmit={(e) => { console.log(e); handleSubmit(e);}}>
       <input type="hidden" name="form-name" value="transfer" />
       <label>
         Name:
@@ -74,7 +73,7 @@ const Checkout = (props) => {
           onChange={handleChange}
         />
       </label>
-      <button type="submit">Pay</button>    </form>
+      <button type="submit" >Pay</button>    </form>
   );
 }
 
