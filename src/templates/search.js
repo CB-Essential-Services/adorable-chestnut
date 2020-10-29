@@ -9,8 +9,8 @@ export default class Landing extends React.Component {
             <Layout {...this.props}>
                 <div className="outer">
                 <div style={{width: '55%', maxWidth: '40rem', margin: '0 auto'}}>
-                <h3>Welcome</h3>
-                <p>Search any LEI from all over the stupid globe 😁</p>
+                <h1>LEI_lookup</h1>
+                <p>Find your Legal Entity Identifier | Explore company details </p>
                     <LookupForm />
                 </div>
                 </div>

@@ -63,17 +63,44 @@ const Checkout = (props) => {
   };
 
   return (
-    <form data-netlify="true" action="/" name="transfer" method="post" onSubmit={(e) => { console.log(e); handleSubmit(e);}}>
+    <form data-netlify="true"  data-netlify-honeypot="bot-field" action="/" name="transfer" method="post" onSubmit={(e) => { console.log(e); handleSubmit(e);}}>
       <input type="hidden" name="form-name" value="transfer" />
+
+      <p className="screen-reader-text">
+        <label>Don't fill this out if you're human: 
+          <input name="bot-field" />
+          </label>
+          </p>
+
+          <p className="form-row">
       <label>
-        Name:
+        Phone:
         <input
-          name="firstName"
-          type="text"
+          name="phone"
+          type="tel" required
           onChange={handleChange}
         />
-      </label>
-      <button type="submit" >Pay</button>    </form>
+      </label>     
+       </p> 
+
+          <p className="form-row">
+      <label>
+      LEI Code:
+        <input
+          name="leiCode"
+          type="text" required
+          onChange={handleChange}
+        />
+      </label>     
+       </p> 
+
+       <p> Unsure what your LEI is? Use our <a href="/lei-search" target="_blank" rel="noopener noreferrer">discovery tool </a> </p>
+
+      <p className="form-row form-submit">
+      <button type="submit" >Pay</button>   
+      </p> 
+
+      </form>
   );
 }
 

@@ -1,4 +1,4 @@
 ---
 template: registration
-title: Apply for LEI
+title: Register LEI - Get New
 ---
