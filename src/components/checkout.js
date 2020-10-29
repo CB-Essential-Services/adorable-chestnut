@@ -10,7 +10,7 @@ import { loadStripe } from "@stripe/stripe-js";
 let stripePromise
 const getStripe = () => {
   if (!stripePromise) {
-    stripePromise = loadStripe("pk_test_RlvibjeKdvwY81acv2YLwvTM00I3UsWXIi")
+    stripePromise = loadStripe("pk_live_bguEpM8vKoFeXb4KPvoJWr4o00vBuhmOwF")
   }
   return stripePromise
 };
@@ -20,9 +20,9 @@ const getStripe = () => {
     const stripe = await getStripe()
     const { error } = await stripe.redirectToCheckout({
       mode: "subscription",
-      lineItems: [{ price: "price_1Gva5YAeKYVunD5viRkFzoR7", quantity: 1 }],
-      successUrl: `http://localhost:8000/thanks/`,
-      cancelUrl: `http://localhost:8000/404`,
+      lineItems: [{ price: "price_1HhgfkAeKYVunD5vT563QMgx", quantity: 1 }],
+      successUrl: `https://cbessential.services/thanks/`,
+      cancelUrl: `https://cbessential.services/404/`,
     });
 
     if (error) {
