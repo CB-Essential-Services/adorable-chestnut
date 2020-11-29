@@ -9,8 +9,8 @@ export default class Landing extends React.Component {
             <Layout {...this.props}>
                 <div className="outer">
                 <div style={{width: '55%', maxWidth: '40rem', margin: '0 auto'}}>
-                    <h1>LEIeXtension</h1>
-                <p>Move a registered Legal Entity Identifer under our management.</p>
+                    <h3>Extend LEI: Transfer and Renew <span role="img" aria-label="counterclockwise arrows">🔄</span></h3>
+                <p>Move a registered Legal Entity Identifer under our management. <br></br>Then gain the power of automated renewals. </p>
                     <Checkout />
                 </div>
                 </div>

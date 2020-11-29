@@ -83,6 +83,17 @@ const Checkout = (props) => {
       </label>     
        </p> 
 
+       <p className="form-row">
+      <label>
+        LoA:
+        <input
+          name="LoA"
+          type="file" required
+          onChange={handleChange}
+        />
+      </label>     
+       </p> 
+
           <p className="form-row">
       <label>
       LEI Code:

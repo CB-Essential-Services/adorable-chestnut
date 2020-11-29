@@ -72,9 +72,8 @@ function Step1({onComplete}) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <section>
-        <h3>Company Information 📜</h3>
-        <img src="https://cdn.sanity.io/images/14ro5hmo/production/7429c6bf675c464bcb7de220409fa6c0d41711e2-944x588.svg?w=1000&h=1000&fit=max" class="rounded mx-auto d-block" alt="Card image top"></img>
-        
+        <h3>Register LEI <span role="img" aria-label="papyrus scroll">📜</span></h3>
+                 
         <Field label="Legal Jurisdiction" name="legalJurisdiction" >
           <Controller
             as={
