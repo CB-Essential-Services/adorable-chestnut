@@ -30,11 +30,20 @@ const getStripe = () => {
     }
   };
 // This function encodes the captured form data in the format that Netlify's backend requires
-function encode(data) {
-    return Object.keys(data)
-        .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-        .join("&");
-  }
+const encode = (data) => {
+  const formData = new FormData()
+  Object.keys(data)
+    .map(key => {
+      if (key === 'files') {
+        for (const file of data[key]) {
+          formData.append(key, file, file.name)
+        }
+      } else {
+        formData.append(key, data[key])
+      }
+    })
+  return formData
+}
 
 const Checkout = (props) => {
   const [name, setName, setState] = useState("")
@@ -45,7 +54,7 @@ const Checkout = (props) => {
 
   const handleAttachment = e => {
     setState({ [e.target.name]: e.target.files[0] });
-  }
+  };
 
   const handleSubmit = (event) => {
     // Prevent the default onSubmit behavior
@@ -91,7 +100,7 @@ const Checkout = (props) => {
       <label>
         File:
         <input
-          name="Attachment"
+          name="attachment"
           type="file" required
           onChange={handleAttachment}
         />
