@@ -50,7 +50,7 @@ const Checkout = (props) => {
     // Note that the header will be different for POSTing a file
     fetch("/", {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      headers: { "Content-Type": "multipart/form-data" },
       body: encode({ 
         "form-name": event.target.getAttribute("name"), 
         ...name
