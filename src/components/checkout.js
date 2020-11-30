@@ -37,10 +37,14 @@ function encode(data) {
   }
 
 const Checkout = (props) => {
-  const [name, setName] = useState("")
+  const [name, setName, setState] = useState("")
 
   const handleChange = (e) => {
     setName({ ...name, [e.target.name]: e.target.value })
+  }
+
+  const handleAttachment = e => {
+    setState({ [e.target.name]: e.target.files[0] });
   }
 
   const handleSubmit = (event) => {
@@ -85,11 +89,11 @@ const Checkout = (props) => {
 
        <p className="form-row">
       <label>
-        LoA:
+        File:
         <input
-          name="LoA"
+          name="Attachment"
           type="file" required
-          onChange={handleChange}
+          onChange={handleAttachment}
         />
       </label>     
        </p> 
