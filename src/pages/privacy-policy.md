@@ -1,6 +1,10 @@
 ---
 template: page
 title: Privacy Policy
+menus:
+  secondary:
+    title: Privacy
+    weight: 4
 ---
 
 **<p style="text-align: center;">Last updated October 30, 2020</p>**

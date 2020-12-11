@@ -1,6 +1,10 @@
 ---
 template: page
 title: Terms for Legal Entity Identifier Registration and Extension
+menus:
+  secondary:
+    title: Terms
+    weight: 5
 ---
 <h2><p style="text-align: center;">About</p></h2>
 
