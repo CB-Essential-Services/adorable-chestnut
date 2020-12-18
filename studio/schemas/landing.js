@@ -45,6 +45,9 @@ export default {
                     "type": "youtube"
                 },
                 {
+                    "type": "instagramPost"
+                },
+                {
                     "type": "section_contact"
                 }
             ]
