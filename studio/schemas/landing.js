@@ -39,7 +39,10 @@ export default {
                     "type": "section_pricing"
                 },
                 {
-                    "type": "section_reviews"
+                    "type": "file"
+                },
+                {
+                    "type": "youtube"
                 },
                 {
                     "type": "section_contact"
