@@ -1,5 +1,5 @@
-import { React } from 'react';
-import { getYouTubeID } from 'get-youtube-id';
+import React from 'react';
+import getYouTubeID from 'get-youtube-id';
 
 const YouTubePreview = ({ value }) => {
   const id = getYouTubeID(value.url);

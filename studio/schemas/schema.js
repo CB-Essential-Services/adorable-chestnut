@@ -15,7 +15,6 @@ import page from './page.js';
 import post from './post.js';
 import menu from './menu.js';
 import footer from './footer.js';
-import files from './files.js';
 import youtube from './youtube.js';
 import foot_link_props from './foot_link_props';
 import social_link_props from './social_link_props';
@@ -54,7 +53,6 @@ export default createSchema({
     header,
     menu,
     footer,
-    files,
     youtube,
     foot_link_props,
     social_link_props,
