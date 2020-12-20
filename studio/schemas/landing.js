@@ -39,13 +39,7 @@ export default {
                     "type": "section_pricing"
                 },
                 {
-                    "type": "file"
-                },
-                {
-                    "type": "youtube"
-                },
-                {
-                    "type": "instagramPost"
+                    "type": "section_reviews"
                 },
                 {
                     "type": "section_contact"
