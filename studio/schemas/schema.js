@@ -35,8 +35,6 @@ import site_menus from './site_menus.js';
 import site_menu_item from './site_menu_item.js';
 import page_menus from './page_menus.js';
 import page_menu_item from './page_menu_item.js';
-import youtube from './youtube.js';
-import instagramPost from './objects/instagramPost.js';
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -58,8 +56,6 @@ export default createSchema({
     social_link_props,
     page,
     post,
-    youtube,
-    instagramPost,
     section_content,
     section_cta,
     section_faq,
