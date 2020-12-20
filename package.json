@@ -72,6 +72,7 @@
     "react-use": "^14.1.1",
     "react-youtube": "^7.13.0",
     "rehype-react": "^3.0.2",
+    "requestify": "^0.2.5",
     "save-dev": "0.0.1-security",
     "sprintf-js": "^1.1.2",
     "stripe": "^8.29.0",
@@ -79,7 +80,7 @@
   },
   "devDependencies": {
     "@sendgrid/mail": "^7.1.1",
-    "bit-bin": "^14.8.8",
+    "bit-bin": "^14.2.3",
     "faunadb": "^2.14.2",
     "frisbee": "^3.1.3",
     "http-proxy-middleware": "^1.0.4",

@@ -26,6 +26,7 @@
     "babel-preset-react": "^6.24.1",
     "bl": "4.0.3",
     "gatsby-source-sanity": "^6.0.4",
+    "get-random-values": "^1.2.2",
     "get-youtube-id": "^1.0.1",
     "lerna": "^3.20.2",
     "prop-types": "^15.6",
