@@ -5,6 +5,7 @@ excerpt: >-
   turpis egestas.
 img_path: >-
   https://cdn.sanity.io/images/14ro5hmo/production/70e7b8872ceae81f622b6bf4edf2abab5dc084b2-1280x853.jpg
+stackbit_url_path: /posts/Set-Big-Goals
 template: post
 thumb_img_path: >-
   https://cdn.sanity.io/images/14ro5hmo/production/8126b912d4ee28d020ed56d6879cd2cc7a830d56-700x466.jpg
