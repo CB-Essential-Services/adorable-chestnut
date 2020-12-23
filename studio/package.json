@@ -12,19 +12,20 @@
     "-": "0.0.1",
     "@babel/plugin-transform-react-jsx-source": "^7.9.0",
     "@bit/mcb-11561.lei.lookup-form": "0.0.1",
-    "@sanity/base": "^1.150.7",
+    "@sanity/base": "^2.1.3",
     "@sanity/cli": "^1.150.7",
     "@sanity/color-input": "^1.150.1",
-    "@sanity/components": "^1.150.7",
-    "@sanity/core": "^1.150.7",
+    "@sanity/components": "^2.1.0",
+    "@sanity/core": "^2.1.2",
     "@sanity/dashboard": "^1.150.7",
-    "@sanity/default-layout": "^1.150.7",
+    "@sanity/default-layout": "^2.1.3",
     "@sanity/default-login": "^1.150.1",
-    "@sanity/desk-tool": "^1.150.7",
+    "@sanity/desk-tool": "^2.1.3",
     "@sanity/production-preview": "^1.150.1",
     "babel-preset-react": "^6.24.1",
     "bl": "4.0.3",
     "gatsby-source-sanity": "^6.0.4",
+    "get-random-values": "^1.2.2",
     "lerna": "^3.20.2",
     "prop-types": "^15.6",
     "react": "^16.2",
@@ -33,6 +34,5 @@
     "sanity-plugin-markdown": "^1.0.1",
     "save-dev": "0.0.1-security",
     "unfetch": "^4.1.0"
-  },
-  "devDependencies": {}
+  }
 }
